@@ -5,6 +5,13 @@ use Test::More;
 use Test::Differences;
 
 my $program = '../bin/git-home-sync';
+## TODO Use this hash below in executing the $cmd, and in constructing
+## the expected output
+#my %config = (
+#    'other-user'     => 'tommy',
+#    'other-host'     => '192.168.1.102',
+#    'other-hostname' => 'teebox',
+#);
 
 # TODO Use JSON or YAML in __DATA__
 # ...or use Test::Base or TestML
