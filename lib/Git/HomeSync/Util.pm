@@ -1,8 +1,9 @@
 package Git::HomeSync::Util;
+use Carp qw(croak);
 
 sub run_cmd {
     my ( $class, $args ) = @_;
-    die 'No command was specified'
+    croak 'No command was specified'
         unless $args->{cmd};
 
     if ( $args->{dry_run} || $args->{debug} ) {
