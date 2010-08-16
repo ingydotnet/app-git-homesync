@@ -1,5 +1,6 @@
 package Git::HomeSync::Util;
 use Carp qw(croak);
+#use autodie qw(:system);
 
 sub run_cmd {
     my ( $class, $args ) = @_;
