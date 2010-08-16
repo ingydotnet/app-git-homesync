@@ -5,7 +5,7 @@ use namespace::autoclean;
 use Git::HomeSync::Util;
 use App::Cmd::Setup -command;
 
-use Sys::Hostname;
+use Sys::Hostname qw(hostname);
 
 has 'user' => (
     isa      => 'Str',
