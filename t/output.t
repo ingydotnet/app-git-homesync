@@ -18,7 +18,7 @@ check_actions( { actions => ['config'] } );
 sub program_path {'./bin/git-home-sync'}
 
 sub regexes {
-    my $choice = shift;
+    my $action = shift;
     my $regexes = {
         'init' => [
             qr/^\$ git init/,
@@ -42,7 +42,7 @@ sub regexes {
             qr/^\$ rm/,
         ],
     };
-    return $regexes->{$choice};
+    return $regexes->{$action};
 }
 
 sub check_actions {
