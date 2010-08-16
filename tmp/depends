@@ -1,0 +1,7 @@
+App::Cmd
+Moose
+namespace::autoclean
+Carp
+autodie
+IPC::System::Simple
+Sys::Hostname
