@@ -3,6 +3,7 @@ use warnings;
 
 use Test::More;
 
+# TODO Use App::Cmd::Tester instead
 check_actions( { actions => ['config'] } );
 
 #check_actions(
