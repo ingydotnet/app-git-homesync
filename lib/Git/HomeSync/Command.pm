@@ -18,6 +18,8 @@ has 'hostname' => (
     isa      => 'Str',
     is       => 'ro',
     required => 1,
+    # Luckily, there is no namespace conflict for "hostname" when using
+    # this Moose attribute
     default  => hostname,
 );
 
