@@ -1,2 +1,5 @@
 - Rename from Git::HomeSync to App::Git::HomeSync
 - Should the dist name be App::Git::Homesync, or git-home-sync?
+
+- Consider using Git::Repository or Git::Wrapper (or maybe VCS::Which?)
+  to interact with git
