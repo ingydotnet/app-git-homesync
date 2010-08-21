@@ -2,8 +2,10 @@ use strict;
 use warnings;
 
 use Test::More;
+use App::Cmd::Tester;
 
-# TODO Use App::Cmd::Tester instead
+use Git::HomeSync;
+
 check_actions( { actions => ['config'] } );
 
 #check_actions(
@@ -14,9 +16,6 @@ check_actions( { actions => ['config'] } );
 #        ]
 #    },
 #);
-
-# TODO Use Path::Class?
-sub program_path {'./bin/git-home-sync'}
 
 sub regexes {
     my $action = shift;
@@ -51,16 +50,11 @@ sub check_actions {
     my @actions = @{ $args->{actions} };
     my @options = $args->{options} ? @{ $args->{options} } : ();
 
-    my $program_path = program_path();
-
     foreach my $action ( @actions ) {
-        my $cmd = join q{ },
-            $program_path,
-            @options,
-            $action;
+        my $result = test_app( 'Git::HomeSync' => [ @options, $action ] );
 
-        my @given_output = qx{$cmd 2>&1}; # (Get STDERR also)
-        chomp $_ for @given_output; # Remove the newline from the command
+        # FIXME $result->output does not return an array of lines
+        my @given_output = $result->output;
 
         my $regexes = regexes($action);
         for ( my $i = 0; $i < @given_output; $i++ ) {
