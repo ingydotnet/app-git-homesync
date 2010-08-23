@@ -11,14 +11,10 @@ sub validate_args {
 sub execute {
     my ( $self, $opt, $args ) = @_;
 
-    my $git_config_cmd =
-        sprintf q{git config --replace-all user.name '%s@%s'},
-        $self->user, $self->hostname;
-
     App::Git::HomeSync::Util->run_cmd(
         {   dry_run => $opt->{dry_run},
             debug   => $opt->{debug},
-            cmd     => $git_config_cmd,
+            cmd     => q{git config #...},#$self->_git_config_cmd,
         }
     );
 }
