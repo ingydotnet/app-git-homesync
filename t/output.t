@@ -17,7 +17,7 @@ check_actions( { actions => ['config'] } );
 #    },
 #);
 
-sub regexes {
+sub get_regexes {
     my $action = shift;
     my $regexes = {
         'init' => [
@@ -57,7 +57,7 @@ sub check_actions {
         chomp $given_output; # Remove newline
         my @given_output = split /\n/, $given_output;
 
-        my $regexes = regexes($action);
+        my $regexes = get_regexes($action);
         for ( my $i = 0; $i < @given_output; $i++ ) {
             my $line  = $given_output[$i];
             my $regex = $regexes->[$i];
