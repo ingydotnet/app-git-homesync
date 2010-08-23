@@ -3,6 +3,11 @@ use Git::HomeSync -command;
 
 sub abstract { q{Update user.name to CURRENT_USER@CURRENT_HOSTNAME} }
 
+sub validate_args {
+    my ( $self, $opt, $args ) = @_;
+    $self->usage_error('No arguments are expected') if @$args;
+}
+
 sub execute {
     my ( $self, $opt, $args ) = @_;
 
