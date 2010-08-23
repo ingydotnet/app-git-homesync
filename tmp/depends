@@ -1,6 +1,6 @@
 TODO Specify version numbers of modules
 
-App::Cmd
+App::Cmd 0.307
 Moose
 namespace::autoclean
 Carp
