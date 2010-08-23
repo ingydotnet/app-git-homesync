@@ -17,6 +17,7 @@ sub execute {
 
     Git::HomeSync::Util->run_cmd(
         {   dry_run => $opt->{dry_run},
+            debug   => $opt->{debug},
             cmd     => $git_config_cmd,
         }
     );

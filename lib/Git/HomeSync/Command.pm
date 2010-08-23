@@ -25,6 +25,7 @@ has 'hostname' => (
 
 sub opt_spec {
     return (
+        [ 'debug',   'Print the commands as they are executed' ],
         [ 'dry-run', 'Only print the commands' ],
     );
 }
