@@ -8,6 +8,7 @@ sub abstract {
 sub execute {
     my ( $self, $opt, $args ) = @_;
 
+    # TODO Do a --allow-empty commit if possible
     App::Git::HomeSync::Util->run_cmd(
         {   dry_run => $opt->{dry_run},
             debug   => $opt->{debug},
