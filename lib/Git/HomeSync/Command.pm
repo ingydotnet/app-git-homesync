@@ -23,15 +23,12 @@ has 'hostname' => (
     default  => hostname,
 );
 
-#sub opt_spec {
-#    my ( $class, $app ) = @_;
-#    return (
-#        'This is the usage description',
-#        [ 'blah' => "bleh" ],
-##        $class->options($app),
-#    )
-#}
-#
+sub opt_spec {
+    return (
+        [ 'dry-run', 'Only print the commands' ],
+    );
+}
+
 #sub validate_args {
 #    my ( $self, $opt, $args ) = @_;
 #    die 'BLEH!' if $opt->{blah};
