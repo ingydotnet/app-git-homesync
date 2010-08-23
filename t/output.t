@@ -29,10 +29,18 @@ sub get_regexes {
             qr/^\$ git branch/,
             qr/^\$ git checkout/,
         ],
-        'config'     => [qr/^\$ git config/],
-        'remote-add' => [ qr/^\$ git remote/, qr/^\$ git fetch/, ],
-        'make-master' =>
-            [ qr/^# Creating/, qr/^\$ git branch/, qr/^\$ git checkout/, ],
+        'config'     => [
+            qr/^\$ git config/
+        ],
+        'remote-add' => [
+            qr/^\$ git remote/,
+            qr/^\$ git fetch/,
+        ],
+        'make-master' => [
+            qr/^# Creating/,
+            qr/^\$ git branch/,
+            qr/^\$ git checkout/,
+        ],
         'remote-fix' => [
             qr/^\$ git remote/,
             qr/^\$ git fetch/,
