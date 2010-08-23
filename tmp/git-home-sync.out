@@ -1,0 +1,30 @@
+$ for i in init config remote-add make-master remote-fix; do echo "$i:"; git-home-sync --dry-run --other-user=tommy --other-host=192.168.1.102 --other-hostname=teebox "$i"; echo; done
+init:
+$ git init
+$ git config --replace-all user.name 'tstanton@tmini'
+$ git remote add teebox 'tommy@192.168.1.102:/home/tommy/bin'
+$ git fetch teebox
+# Creating a 'master' branch, based off of the remote branch...
+$ git branch master teebox/master
+$ git checkout master .
+
+config:
+$ git config --replace-all user.name 'tstanton@tmini'
+
+remote-add:
+$ git remote add teebox 'tommy@192.168.1.102:/home/tommy/bin'
+$ git fetch teebox
+
+make-master:
+# Creating a 'master' branch, based off of the remote branch...
+$ git branch master teebox/master
+$ git checkout master .
+
+remote-fix:
+$ git remote add teebox 'tommy@192.168.1.102:/home/tommy/bin'
+$ git fetch teebox
+# Deleting the 'origin/master' remote branch...
+$ git branch -r -d origin/master
+$ git config --remove-section remote.origin
+$ rm -R .git/refs/remotes/origin/
+
