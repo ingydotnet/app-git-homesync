@@ -75,7 +75,7 @@ sub check_actions {
             my $regex = $regexes->[$i];
             # There should be a regex that matches in sequence with the
             # output
-            if ( ref $regex ) {
+            if ( $regex ) {
                 like $line, $regex, qq{Correct command for "$action" action};
             }
             else {
