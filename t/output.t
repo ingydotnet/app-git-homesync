@@ -53,8 +53,9 @@ sub check_actions {
     foreach my $action ( @actions ) {
         my $result = test_app( 'Git::HomeSync' => [ @options, $action ] );
 
-        # FIXME $result->output does not return an array of lines
-        my @given_output = $result->output;
+        my $given_output = $result->output;
+        chomp $given_output; # Remove newline
+        my @given_output = split /\n/, $given_output;
 
         my $regexes = regexes($action);
         for ( my $i = 0; $i < @given_output; $i++ ) {
