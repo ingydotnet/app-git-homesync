@@ -1,0 +1,11 @@
+#!/bin/sh
+# Use like this:
+# eval $cmd config --dry-run
+# eval $debug_cmd config --dry-run
+# eval $test
+# eval $debug_test
+
+export cmd='clear; perl -Ilib ./bin/git-home-sync'
+export debug_cmd='clear; perl -Ilib -d ./bin/git-home-sync'
+export test='clear; prove -Ilib -v --merge ./t/'
+export debug_test='clear; perl -Ilib -d ./t/output.t'
