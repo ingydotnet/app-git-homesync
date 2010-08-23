@@ -6,8 +6,6 @@ sub abstract { 'Update user.name to CURRENT_USER@CURRENT_HOSTNAME' }
 sub execute {
     my ( $self, $opt, $args ) = @_;
 
-    # TODO Make sure that only ./git/config is affected, not the global
-    # config file ~/.gitconfig
     my $git_config_cmd =
         sprintf q{git config --replace-all user.name '%s@%s'},
         $self->user, $self->hostname;
