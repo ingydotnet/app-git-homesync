@@ -1,7 +1,7 @@
 package Git::HomeSync::Command::config;
 use Git::HomeSync -command;
 
-sub abstract { 'Update user.name to CURRENT_USER@CURRENT_HOSTNAME' }
+sub abstract { q{Update user.name to CURRENT_USER@CURRENT_HOSTNAME} }
 
 sub execute {
     my ( $self, $opt, $args ) = @_;
