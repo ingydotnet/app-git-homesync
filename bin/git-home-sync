@@ -1,3 +1,3 @@
 #!/usr/bin/env perl
-use Git::HomeSync;
-Git::HomeSync->run;
+use App::Git::HomeSync;
+App::Git::HomeSync->run;
