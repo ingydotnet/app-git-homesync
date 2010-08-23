@@ -4,7 +4,7 @@ use warnings;
 use Test::More;
 use App::Cmd::Tester;
 
-use Git::HomeSync;
+use App::Git::HomeSync;
 
 check_actions(
     {   actions => ['config'],
@@ -63,7 +63,7 @@ sub check_actions {
     my @options = $args->{options} ? @{ $args->{options} } : ();
 
     foreach my $action ( @actions ) {
-        my $result = test_app( 'Git::HomeSync' => [ $action, @options ] );
+        my $result = test_app( 'App::Git::HomeSync' => [ $action, @options ] );
 
         my $given_output = $result->output;
         chomp $given_output; # Remove newline

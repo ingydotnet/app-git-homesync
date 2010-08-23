@@ -1,4 +1,4 @@
-package Git::HomeSync::Util;
+package App::Git::HomeSync::Util;
 use Carp qw(croak);
 #use autodie qw(:system);
 

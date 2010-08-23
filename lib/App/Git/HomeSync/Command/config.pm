@@ -1,5 +1,5 @@
-package Git::HomeSync::Command::config;
-use Git::HomeSync -command;
+package App::Git::HomeSync::Command::config;
+use App::Git::HomeSync -command;
 
 sub abstract { q{Update user.name to CURRENT_USER@CURRENT_HOSTNAME} }
 
@@ -15,7 +15,7 @@ sub execute {
         sprintf q{git config --replace-all user.name '%s@%s'},
         $self->user, $self->hostname;
 
-    Git::HomeSync::Util->run_cmd(
+    App::Git::HomeSync::Util->run_cmd(
         {   dry_run => $opt->{dry_run},
             debug   => $opt->{debug},
             cmd     => $git_config_cmd,

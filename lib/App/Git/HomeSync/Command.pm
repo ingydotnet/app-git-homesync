@@ -1,8 +1,8 @@
-package Git::HomeSync::Command;
+package App::Git::HomeSync::Command;
 use Moose;
 use namespace::autoclean;
 
-use Git::HomeSync::Util;
+use App::Git::HomeSync::Util;
 use App::Cmd::Setup -command;
 
 use Sys::Hostname qw(hostname);
