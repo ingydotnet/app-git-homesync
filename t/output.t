@@ -61,7 +61,15 @@ sub check_actions {
         for ( my $i = 0; $i < @given_output; $i++ ) {
             my $line  = $given_output[$i];
             my $regex = $regexes->[$i];
-            like $line, $regex, qq{Correct command for "$action" action};
+            # There should be a regex that matches in sequence with the
+            # output
+            if ( ref $regex ) {
+                like $line, $regex, qq{Correct command for "$action" action};
+            }
+            else {
+                ok 0, qq{Too many lines were printed for "$action" action};
+                last;
+            }
         }
     }
 }
