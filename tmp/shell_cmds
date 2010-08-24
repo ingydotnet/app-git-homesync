@@ -1,5 +1,6 @@
 #!/bin/sh
-# Use like this:
+# $ source THIS_FILE
+# ...then use like this:
 # eval $cmd config --dry-run
 # eval $debug_cmd config --dry-run
 # eval $test
