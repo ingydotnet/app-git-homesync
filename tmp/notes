@@ -1,4 +1,26 @@
-- Should the dist name be App::Git::Homesync, or git-home-sync?
+- Features
+    - Have a wrapper for "git pull" (or perhaps involving "git fetch"
+      and "git merge", which will automatically moves ("backs up") an
+      untracked file in the user's home directory that is going to
+      conflict with a new file being pulled in.  The goal is to avoid
+      this sort of problem, which prevents a successful pull:
+        [tstanton@tbox ~]$ git pull
+        remote: Generating pack...
+        remote: Done counting 17 objects.
+        Result has 12 objects.
+        remote: Deltifying 12 objects...
+        100% (12/12)remote:  done
+        Unpacking 12 objects...
+        remote: Total 12 (delta 5), reused 0 (delta 0)
+        100% (12/12) done
+        * refs/remotes/public/master: fast forward to branch 'master' of
+        /var/www/git/home
+        old..new: 44de06e..ce178f4
+        Updating 44de06e..ce178f4
+        fatal: Untracked working tree file '.vroom/vimrc' would be
+        overwritten by merge.
 
-- Consider using Git::Repository or Git::Wrapper (or maybe VCS::Which?)
-  to interact with git
+- CPAN-related
+    - Should the dist name be App::Git::Homesync, or git-home-sync?
+    - Consider using Git::Repository or Git::Wrapper (or maybe
+      VCS::Which?) to interact with git
