@@ -19,6 +19,17 @@
         Updating 44de06e..ce178f4
         fatal: Untracked working tree file '.vroom/vimrc' would be
         overwritten by merge.
+        [tstanton@tbox ~]$ mv -iv ./.vroom ./.vroom.bak$(today)
+        `./.vroom' -> `./.vroom.bak20100826'
+        [tstanton@tbox ~]$ git pull
+        Updating 44de06e..ce178f4
+        Fast forward
+        .gitignore          |    3 +++
+        .mplayer/input.conf |    4 ++--
+        .vimrc              |    2 ++
+        .vroom/vimrc        |   14 ++++++++++++++
+        4 files changed, 21 insertions(+), 2 deletions(-)
+        create mode 100644 .vroom/vimrc
 
 - CPAN-related
     - Should the dist name be App::Git::Homesync, or git-home-sync?
