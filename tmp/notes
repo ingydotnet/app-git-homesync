@@ -35,3 +35,7 @@
     - Should the dist name be App::Git::Homesync, or git-home-sync?
     - Consider using Git::Repository or Git::Wrapper (or maybe
       VCS::Which?) to interact with git
+    - Consider utilizing CPAN modules like:
+        - App::Info - determine if git is on the system and what version
+            - Have a SKIP in the test suite if git is not on the system
+        - IO::Prompter - for user input
