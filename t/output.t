@@ -7,7 +7,7 @@ use App::Cmd::Tester;
 use App::Git::HomeSync;
 
 check_actions(
-    {   actions => ['init', 'config'],
+    {   actions => [qw(init config)],
         options => ['--dry-run']
     },
 );
