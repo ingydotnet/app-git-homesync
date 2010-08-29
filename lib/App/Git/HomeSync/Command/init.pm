@@ -87,7 +87,10 @@ sub execute {
             debug   => $self->{debug},
             cmds => [
                 map { $self->$_ }
-                qw( _git_init_cmd _git_config_cmd _git_remote_add_cmd )
+                qw( _git_init_cmd
+                    _git_config_cmd
+                    _git_remote_add_cmd
+                    _git_fetch_cmd )
             ],
         }
     );

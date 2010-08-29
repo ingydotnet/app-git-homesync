@@ -58,6 +58,21 @@ sub _build__git_config_cmd {
     );
 }
 
+has '_git_fetch_cmd' => (
+    isa        => 'Str',
+    is         => 'ro',
+    lazy_build => 1,
+);
+
+sub _build__git_fetch_cmd {
+    my $self = shift;
+
+    return (
+        sprintf q{git fetch %s},
+        $self->{'other-hostname'}
+    );
+}
+
 #sub validate_args {
 #    my ( $self, $opt, $args ) = @_;
 #    die 'BLEH!' if $opt->{blah};
