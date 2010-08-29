@@ -17,10 +17,10 @@ sub execute {
     my ( $self, $opt, $args ) = @_;
 
     # TODO Do a --allow-empty commit if possible
-    App::Git::HomeSync::Util->run_cmd(
+    App::Git::HomeSync::Util->run_cmds(
         {   dry_run => $self->{'dry-run'},
             debug   => $self->{debug},
-            cmd     => q{git init},
+            cmds    => [ $self->_git_init_cmd ],
         }
     );
 }

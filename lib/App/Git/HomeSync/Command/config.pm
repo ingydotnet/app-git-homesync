@@ -14,10 +14,10 @@ sub validate_args {
 sub execute {
     my ( $self, $opt, $args ) = @_;
 
-    App::Git::HomeSync::Util->run_cmd(
+    App::Git::HomeSync::Util->run_cmds(
         {   dry_run => $self->{'dry-run'},
             debug   => $self->{debug},
-            cmd     => $self->_git_config_cmd,
+            cmds    => [ $self->_git_config_cmd, ],
         }
     );
 }
