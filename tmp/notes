@@ -1,4 +1,6 @@
 - Features
+    - Adding a file should first additionally append .gitignore with the
+      filename
     - Have a wrapper for "git pull" (or perhaps involving "git fetch"
       and "git merge", which will automatically moves ("backs up") an
       untracked file in the user's home directory that is going to
