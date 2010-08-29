@@ -21,15 +21,6 @@ check_actions(
     },
 );
 
-#check_actions(
-#    {   actions => [ 'init', 'remote-add', 'make-master', 'remote-fix', ],
-#        options => [
-#            '--dry-run',                  '--other-user=tommy',
-#            '--other-host=192.168.1.102', '--other-hostname=teebox',
-#        ]
-#    },
-#);
-
 sub get_regexes {
     my $action = shift;
     my $regexes = {
