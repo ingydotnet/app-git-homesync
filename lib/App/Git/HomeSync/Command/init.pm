@@ -2,10 +2,15 @@ package App::Git::HomeSync::Command::init;
 use Moose;
 use namespace::autoclean;
 
-extends qw(MooseX::App::Cmd::Command);
+extends qw(App::Git::HomeSync::Command);
 
 sub abstract {
     q{Do a 'git init', then ACTIONs: config, remote-add, make-master}
+}
+
+sub validate_args {
+    my ( $self, $opt, $args ) = @_;
+    $self->usage_error('No arguments are expected') if @$args;
 }
 
 sub execute {
