@@ -7,7 +7,16 @@ use App::Cmd::Tester;
 use App::Git::HomeSync;
 
 check_actions(
-    {   actions => [qw(init config)],
+    {   actions => ['init'],
+        options => [
+            '--dry-run',                  '--other-user=tommy',
+            '--other-host=192.168.1.102', '--other-hostname=teebox',
+        ]
+    },
+);
+
+check_actions(
+    {   actions => ['config'],
         options => ['--dry-run']
     },
 );
@@ -67,6 +76,7 @@ sub check_actions {
 
         my $given_output = $result->output;
         chomp $given_output; # Remove newline
+        diag "OUTPUT:\n$given_output";
         my @given_output = split /\n/, $given_output;
 
         my $regexes = get_regexes($action);
