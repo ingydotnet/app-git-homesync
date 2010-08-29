@@ -31,6 +31,10 @@
         4 files changed, 21 insertions(+), 2 deletions(-)
         create mode 100644 .vroom/vimrc
 
+- Improvements
+    - Have App::Git::HomeSync::Util::run_cmd() accept an arrayref of
+      system commands to run
+
 - CPAN-related
     - Should the dist name be App::Git::Homesync, or git-home-sync?
     - Consider using Git::Repository or Git::Wrapper (or maybe
