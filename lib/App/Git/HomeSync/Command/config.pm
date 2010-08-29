@@ -1,5 +1,10 @@
 package App::Git::HomeSync::Command::config;
-use App::Git::HomeSync -command;
+use Moose;
+use namespace::autoclean;
+
+#extends qw(MooseX::App::Cmd::Command);
+extends qw(App::Git::HomeSync::Command);
+#use base 'App::Git::HomeSync::Command';
 
 sub abstract { q{Update user.name to CURRENT_USER@CURRENT_HOSTNAME} }
 
@@ -12,11 +17,13 @@ sub execute {
     my ( $self, $opt, $args ) = @_;
 
     App::Git::HomeSync::Util->run_cmd(
-        {   dry_run => $opt->{dry_run},
-            debug   => $opt->{debug},
-            cmd     => q{git config #...},#$self->_git_config_cmd,
+        {   dry_run => $self->{'dry-run'},
+            debug   => $self->{debug},
+            cmd     => $self->_git_config_cmd,
         }
     );
 }
+
+__PACKAGE__->meta->make_immutable;
 
 1;

@@ -2,48 +2,54 @@ package App::Git::HomeSync::Command;
 use Moose;
 use namespace::autoclean;
 
+extends qw(MooseX::App::Cmd::Command);
+
 use App::Git::HomeSync::Util;
-use App::Cmd::Setup -command;
 
 use Sys::Hostname qw(hostname);
 
-has 'user' => (
+has 'debug' => (
+    isa           => 'Bool',
+    is            => 'rw',
+    traits        => ['MooseX::Getopt::Meta::Attribute::Trait'],
+    cmd_aliases   => 'd',
+    documentation => 'Print the commands as they are executed',
+);
+
+has 'dry-run' => (
+    isa           => 'Bool',
+    is            => 'rw',
+    traits        => ['MooseX::Getopt::Meta::Attribute::Trait'],
+    documentation => 'Only print the commands',
+);
+
+has '_user' => (
     isa      => 'Str',
     is       => 'ro',
     required => 1,
     default  => $ENV{USER},
 );
 
-has 'hostname' => (
+has '_hostname' => (
     isa      => 'Str',
     is       => 'ro',
     required => 1,
-    default  => hostname, # Luckily, there is no namespace
-                          # conflict for "hostname" when using this
-                          # Moose attribute
+    default  => hostname,
 );
 
-sub opt_spec {
+has '_git_config_cmd' => (
+    isa        => 'Str',
+    is         => 'ro',
+    lazy_build => 1,
+);
+
+sub _build__git_config_cmd {
+    my $self = shift;
     return (
-        [ 'debug',   'Print the commands as they are executed' ],
-        [ 'dry-run', 'Only print the commands' ],
+        sprintf q{git config --replace-all user.name '%s@%s'},
+        $self->_user, $self->_hostname
     );
 }
-
-## FIXME With straight-up App::Cmd, this attributes don't play nice with
-## opt_spec().  Maybe MooseX::App::Cmd will help me do what I want.
-#has '_git_config_cmd' => (
-#    isa     => 'Str',
-#    is      => 'ro',
-#    builder => '_build__git_config_cmd',
-#);
-
-#sub _build__git_config_cmd {
-#    return (
-#        sprintf q{git config --replace-all user.name '%s@%s'},
-#        $self->user, $self->hostname
-#    );
-#}
 
 #sub validate_args {
 #    my ( $self, $opt, $args ) = @_;
