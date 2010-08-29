@@ -34,6 +34,15 @@
         create mode 100644 .vroom/vimrc
 
 - Improvements
+    - Use IO::Prompter for interactive configuration
+        - If no action is given to git-home-sync, then the user is
+          prompted whether this is the first time running the program.
+            - Ask if the user wants to create an empty repository and
+              start tracking it in their home directory
+    - $ git-home-sync create-master-repo
+        - 
+    - $ git-home-sync setup
+        - 
 
 - CPAN-related
     - Should the dist name be App::Git::Homesync, or git-home-sync?
