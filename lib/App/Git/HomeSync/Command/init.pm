@@ -31,7 +31,8 @@ has 'other-host' => (
 has 'other-hostname' => (
     isa           => 'Str',
     is            => 'rw',
-    required      => 1,
+    required      => 0,
+    default       => 'origin',
     traits        => ['MooseX::Getopt::Meta::Attribute::Trait'],
     documentation => 'The hostname of the other box that you want to '
                    . 'sync with',

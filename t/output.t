@@ -12,7 +12,7 @@ check_actions(
             '--dry-run',
             '--other-user=tommy',
             '--other-host=192.168.1.102',
-            '--other-hostname=teebox',
+            #'--other-hostname=teebox',
         ]
     },
 );
