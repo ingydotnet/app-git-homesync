@@ -2,9 +2,7 @@ package App::Git::HomeSync::Command::config;
 use Moose;
 use namespace::autoclean;
 
-#extends qw(MooseX::App::Cmd::Command);
 extends qw(App::Git::HomeSync::Command);
-#use base 'App::Git::HomeSync::Command';
 
 sub abstract { q{Update user.name to CURRENT_USER@CURRENT_HOSTNAME} }
 
