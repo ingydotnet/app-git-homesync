@@ -9,8 +9,10 @@ use App::Git::HomeSync;
 check_actions(
     {   actions => ['init'],
         options => [
-            '--dry-run',                  '--other-user=tommy',
-            '--other-host=192.168.1.102', '--other-hostname=teebox',
+            '--dry-run',
+            '--other-user=tommy',
+            '--other-host=192.168.1.102',
+            '--other-hostname=teebox',
         ]
     },
 );
