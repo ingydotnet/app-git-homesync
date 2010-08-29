@@ -71,7 +71,7 @@ sub check_actions {
 
         my $regexes = get_regexes($action);
         cmp_ok( @given_output, '==', @$regexes,
-            qq{Action "$action" executed all commands} )
+            qq{"$action" action executed all commands} )
             or next;
 
         for ( my $i = 0; $i < @given_output; $i++ ) {
