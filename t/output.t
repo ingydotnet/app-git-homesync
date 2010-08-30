@@ -72,22 +72,26 @@ sub check_actions {
         my @given_output = split /\n/, $given_output;
 
         my $regexes = get_regexes($action);
-        cmp_ok( @given_output, '==', @$regexes,
-            qq{"$action" action executed all commands} )
-            or next;
+        cmp_ok( scalar @given_output, '==', scalar @$regexes,
+            sprintf qq{"$action" action executed %s command(s)},
+            scalar @$regexes
+        ) or next;
 
-        for ( my $i = 0; $i < @given_output; $i++ ) {
-            my $line  = $given_output[$i];
-            my $regex = $regexes->[$i];
-            # There should be a regex that matches in sequence with the
-            # output
-            if ( $regex ) {
-                like $line, $regex, qq{Correct command for "$action" action};
+        subtest qq{"$action" action commands} => sub {
+            for ( my $i = 0; $i < @given_output; $i++ ) {
+                my $line  = $given_output[$i];
+                my $regex = $regexes->[$i];
+                # There should be a regex that matches in sequence with the
+                # output
+                if ( $regex ) {
+                    like $line, $regex, qq{Correct command};
+                }
+                else {
+                    ok 0, qq{Too many lines were printed};
+                    last;
+                }
             }
-            else {
-                ok 0, qq{Too many lines were printed for "$action" action};
-                last;
-            }
+            done_testing;
         }
     }
 }

@@ -1,5 +1,7 @@
 TODO Specify version numbers of modules
 
+Test::More 0.94
+MooseX::App::Cmd
 App::Cmd 0.307
 Moose
 namespace::autoclean
