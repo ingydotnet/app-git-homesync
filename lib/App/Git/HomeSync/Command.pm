@@ -73,6 +73,20 @@ sub _build__git_fetch_cmd {
     );
 }
 
+has '_git_branch_cmd' => (
+    isa        => 'Str',
+    is         => 'ro',
+    lazy_build => 1,
+);
+
+sub _build__git_branch_cmd {
+    my $self = shift;
+    return (
+        sprintf q{git branch master %s/master},
+        $self->_remote_branch_name
+    );
+}
+
 #sub validate_args {
 #    my ( $self, $opt, $args ) = @_;
 #    die 'BLEH!' if $opt->{blah};

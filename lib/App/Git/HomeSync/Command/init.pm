@@ -105,7 +105,8 @@ sub execute {
                 qw( _git_init_cmd
                     _git_config_cmd
                     _git_remote_add_cmd
-                    _git_fetch_cmd )
+                    _git_fetch_cmd
+                    _git_branch_cmd )
             ],
         }
     );

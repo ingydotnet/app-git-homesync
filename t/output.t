@@ -31,7 +31,6 @@ sub get_regexes {
             qr/^\$ git config/,
             qr/^\$ git remote/,
             qr/^\$ git fetch/,
-            qr/^# Creating/,
             qr/^\$ git branch/,
             qr/^\$ git checkout/,
         ],
