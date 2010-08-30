@@ -37,6 +37,7 @@ has 'other-hostname' => (
                    . 'sync with',
 );
 
+# TODO Try to move these non-option attributes to Command.pm
 has '_remote_branch_name' => (
     isa        => 'Str',
     is         => 'ro',
