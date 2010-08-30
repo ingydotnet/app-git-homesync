@@ -69,7 +69,7 @@ sub _build__git_fetch_cmd {
 
     return (
         sprintf q{git fetch %s},
-        $self->{'other-hostname'}
+        $self->_remote_branch_name
     );
 }
 

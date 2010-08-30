@@ -32,11 +32,26 @@ has 'other-hostname' => (
     isa           => 'Str',
     is            => 'rw',
     required      => 0,
-    default       => 'origin',
     traits        => ['MooseX::Getopt::Meta::Attribute::Trait'],
     documentation => 'The hostname of the other box that you want to '
                    . 'sync with',
 );
+
+has '_remote_branch_name' => (
+    isa        => 'Str',
+    is         => 'ro',
+    required   => 1,
+    lazy_build => 1,
+);
+
+sub _build__remote_branch_name {
+    my $self = shift;
+    my $remote_branch_name
+        = $self->{'other-hostname'} ?
+          $self->{'other-hostname'}
+        : 'origin';
+    return $remote_branch_name;
+}
 
 has '_other_repos_path' => (
     isa        => 'Str',
@@ -66,7 +81,7 @@ sub _build__git_remote_add_cmd {
     my $self = shift;
     return (
         sprintf qq{git remote add %s '%s@%s:%s'},
-        $self->{'other-hostname'},
+        $self->_remote_branch_name,
         $self->{'other-user'},
         $self->{'other-host'},
         $self->_other_repos_path
