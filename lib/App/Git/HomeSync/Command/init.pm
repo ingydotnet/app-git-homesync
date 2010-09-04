@@ -68,7 +68,7 @@ sub _build__other_repos_path {
     # FIXME
     $path =~ s!^(/(?:home|Users)/)$user!$1$other_user!;
 
-    return $path
+    return $path;
 }
 
 
