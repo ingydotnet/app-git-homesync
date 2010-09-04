@@ -107,7 +107,8 @@ sub execute {
                     _git_config_cmd
                     _git_remote_add_cmd
                     _git_fetch_cmd
-                    _git_branch_cmd )
+                    _git_branch_cmd
+                    _git_checkout_cmd )
             ],
         }
     );

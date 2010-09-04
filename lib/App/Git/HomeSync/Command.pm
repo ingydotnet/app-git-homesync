@@ -87,6 +87,16 @@ sub _build__git_branch_cmd {
     );
 }
 
+has '_git_checkout_cmd' => (
+    isa        => 'Str',
+    is         => 'ro',
+    lazy_build => 1,
+);
+
+sub _build__git_checkout_cmd {
+    return q{git checkout master .};
+}
+
 #sub validate_args {
 #    my ( $self, $opt, $args ) = @_;
 #    die 'BLEH!' if $opt->{blah};
