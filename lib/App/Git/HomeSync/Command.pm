@@ -41,8 +41,12 @@ has '_hostname' => (
 has '_git_init_cmd' => (
     isa        => 'Str',
     is         => 'ro',
-    default    => q{git init},
+    builder    => '_build__git_init_cmd',
 );
+
+sub _build__git_init_cmd {
+    return q{git init};
+}
 
 has '_git_config_cmd' => (
     isa        => 'Str',
