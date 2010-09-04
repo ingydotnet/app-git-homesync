@@ -41,7 +41,7 @@ has '_hostname' => (
 has '_git_init_cmd' => (
     isa        => 'Str',
     is         => 'ro',
-    builder    => '_build__git_init_cmd',
+    lazy_build => 1,
 );
 
 sub _build__git_init_cmd {
@@ -94,7 +94,7 @@ sub _build__git_branch_cmd {
 has '_git_checkout_cmd' => (
     isa        => 'Str',
     is         => 'ro',
-    builder    => '_build__git_checkout_cmd',
+    lazy_build => 1,
 );
 
 sub _build__git_checkout_cmd {
