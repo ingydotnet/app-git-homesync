@@ -90,7 +90,7 @@ sub _build__git_branch_cmd {
 has '_git_checkout_cmd' => (
     isa        => 'Str',
     is         => 'ro',
-    lazy_build => 1,
+    builder    => '_build__git_checkout_cmd',
 );
 
 sub _build__git_checkout_cmd {
