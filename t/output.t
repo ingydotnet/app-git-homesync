@@ -3,7 +3,7 @@ use strict;
 use warnings;
 
 use Test::More;
-use App::Cmd::Tester;
+use App::Cmd::Tester qw(test_app);
 
 use App::Git::HomeSync;
 
