@@ -87,7 +87,7 @@ sub check_actions {
                     like $line, $regex, qq{Correct command};
                 }
                 else {
-                    ok 0, qq{Too many lines were printed};
+                    fail qq{Too many lines were printed};
                     last;
                 }
             }
