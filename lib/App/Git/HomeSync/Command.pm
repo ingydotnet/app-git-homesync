@@ -13,6 +13,8 @@ has 'debug' => (
     is            => 'rw',
     traits        => ['MooseX::Getopt::Meta::Attribute::Trait'],
     cmd_aliases   => 'd',
+    # XXX Use --nodebug to disable output
+    default       => 1,
     documentation => 'Print the commands as they are executed',
 );
 
