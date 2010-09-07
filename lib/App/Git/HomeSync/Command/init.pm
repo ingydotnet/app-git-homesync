@@ -269,7 +269,7 @@ sub initialize_master_repo_and_sync {
     );
 
     unless ( $self->{'dry-run'} ) {
-        $repo_path->mkpath;
+        $repo_path->mkpath unless -d $repo_path->stringify;
     }
 
     unless ( $self->{'dry-run'} ) {
