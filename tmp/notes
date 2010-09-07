@@ -1,6 +1,39 @@
 - Features
-    - Adding a file should first additionally append .gitignore with the
-      filename
+    - Have a wrapper for "git add" that deals with .gitignore (see "Misc
+      ideas")
+    - Misc ideas:
+        $ git-home-sync create-repo
+        # Prompt for path (ie. /home/tstanton/var/git/)
+        # Create home.git via $ git init --bare
+
+        $ pwd
+        /home/tstanton
+
+        $ git-home-sync init
+        # (Do create-repo for bare repo)
+        # Start with empty commit in working tree
+        # git remote add origin ../repository_remote-bare
+        # Add this bit...
+            [branch "master"]
+                    remote = origin
+                    merge = refs/heads/master
+        # Add templated .gitignore (in __DATA__)
+        # $ git push
+
+        $ git-home-sync add .bashrc
+        # >>.gitignore
+        # git add -v .bashrc
+
+        $ git-home-sync init --repo-path=/home/tstanton/var/git/home.git
+
+        $ git-home-sync init --repo-path=tstanton@tommystanton.com:/home/tstanton/var/git/home.git
+        # git init (if ./.git/ doesn't already exist)
+        # git config --replace-all user.name 'tstanton@tmini'
+        # git remote add origin 'tstanton@192.168.1.102:/home/tstanton/var/git/home.git'
+        (if origin branch doesn't already exist)
+        # git fetch origin (will prompt for SSH password)
+        # git branch master origin/master
+        # git checkout master .
     - Have a wrapper for "git pull" (or perhaps involving "git fetch"
       and "git merge", which will automatically moves ("backs up") an
       untracked file in the user's home directory that is going to

@@ -11,10 +11,23 @@ check_actions(
     {   actions => ['init'],
         options => [
             '--dry-run',
-            '--other-user=tommy',
-            '--other-host=192.168.1.102',
+            '--repo-path=/tmp/bleh.git',
+            #'--other-user=tommy',
+            #'--other-host=192.168.1.102',
             #'--other-hostname=teebox',
-        ]
+        ],
+        has_repo_path => 1,
+    },
+);
+
+check_actions(
+    {   actions => ['init'],
+        options => [
+            '--dry-run',
+            #'--other-user=tommy',
+            #'--other-host=192.168.1.102',
+            #'--other-hostname=teebox',
+        ],
     },
 );
 
@@ -25,38 +38,32 @@ check_actions(
 );
 
 sub get_regexes {
-    my $action = shift;
+    my $opts = shift;
     my $regexes = {
-        'init' => [
-            qr/^\$ git init/,
-            qr/^\$ git config/,
-            qr/^\$ git remote/,
-            qr/^\$ git fetch/,
-            qr/^\$ git branch/,
-            qr/^\$ git checkout/,
-        ],
-        'config'     => [
-            qr/^\$ git config/
-        ],
-        'remote-add' => [
-            qr/^\$ git remote/,
-            qr/^\$ git fetch/,
-        ],
-        'make-master' => [
-            qr/^# Creating/,
-            qr/^\$ git branch/,
-            qr/^\$ git checkout/,
-        ],
-        'remote-fix' => [
-            qr/^\$ git remote/,
-            qr/^\$ git fetch/,
-            qr/^# Deleting/,
-            qr/^\$ git branch/,
-            qr/^\$ git config/,
-            qr/^\$ rm/,
-        ],
+        (   'init' => $opts->{has_repo_path} ?
+
+            [ qr/^\$ git init/,
+              qr/^\$ git config/,
+              qr/^\$ git remote/,
+              qr/^\$ git fetch/,
+              qr/^\$ git branch/,
+              qr/^\$ git checkout/, ]
+
+          : [ qr/^\$ git init --bare/,
+              qr/^\$ git init/,
+              qr/^\$ git config/,
+              qr/^\$ git remote/,
+              qr/^\$ git fetch/,
+              qr/^\$ git branch/,
+              qr/^\$ git checkout/,
+              qr/^\$ git config/,
+              qr/^\$ git config/,
+              qr/^\$ git commit/,
+              qr/^\$ git push/, ]
+        ),
+        'config' => [qr/^\$ git config/],
     };
-    return $regexes->{$action};
+    return $regexes->{ $opts->{action} };
 }
 
 sub check_actions {
@@ -72,7 +79,11 @@ sub check_actions {
         diag "OUTPUT:\n$given_output";
         my @given_output = split /\n/, $given_output;
 
-        my $regexes = get_regexes($action);
+        my $regexes = get_regexes(
+            {   action        => $action,
+                has_repo_path => $args->{has_repo_path}
+            }
+        );
         cmp_ok( scalar @given_output, '==', scalar @$regexes,
             sprintf qq{"$action" action executed %s command(s)},
             scalar @$regexes

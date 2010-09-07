@@ -17,7 +17,7 @@ sub execute {
     App::Git::HomeSync::Util->run_cmds(
         {   dry_run => $self->{'dry-run'},
             debug   => $self->{debug},
-            cmds    => [ $self->_git_config_cmd, ],
+            cmds    => [ $self->_git_config_user_cmd, ],
         }
     );
 }
