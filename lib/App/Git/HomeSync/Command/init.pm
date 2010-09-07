@@ -232,15 +232,15 @@ sub execute {
     # If the user supplied the path on the command-line...
     if ( $self->{'repo-path'} ) {
     #if ( $self->_is_repo_path_supplied ) {
-        $self->sync_with_master_repo();
+        $self->_sync_with_master_repo();
     }
     # Create the repo (and thereby the path)
     else {
-        $self->initialize_master_repo_and_sync();
+        $self->_initialize_master_repo_and_sync();
     }
 }
 
-sub sync_with_master_repo {
+sub _sync_with_master_repo {
     my $self = shift;
 
     App::Git::HomeSync::Util->run_cmds(
@@ -259,7 +259,7 @@ sub sync_with_master_repo {
     );
 }
 
-sub initialize_master_repo_and_sync {
+sub _initialize_master_repo_and_sync {
     my $self = shift;
 
     my $orig_path = Path::Class::Dir->new();
