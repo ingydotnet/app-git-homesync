@@ -244,6 +244,7 @@ sub execute {
 sub _sync_with_master_repo {
     my $self = shift;
 
+    # TODO Move aside conflicting files
     App::Git::HomeSync::Util->run_cmds(
         {   dry_run => $self->{'dry-run'},
             debug   => $self->{debug},
@@ -289,6 +290,7 @@ sub _initialize_master_repo_and_sync {
     unless ( $self->{'dry-run'} ) {
         $CWD = $orig_path->stringify;
     }
+    # TODO Move aside conflicting files
     # TODO Add .gitignore after empty commit
     # TODO Add more diagnostics if the --allow-empty commit autodies
     App::Git::HomeSync::Util->run_cmds(
