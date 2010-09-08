@@ -108,6 +108,7 @@ has '_repo_dir' => (
 sub _build__repo_dir {
     my $self = shift;
 
+    # TODO Move to attribute in Command.pm: _home_dir
     my $home_dir = File::HomeDir->my_home;
     my $repo_dir_default = Path::Class::Dir->new(
         $home_dir, 'var', 'git'
@@ -229,6 +230,9 @@ sub validate_args {
 
 sub execute {
     my ( $self, $opt, $args ) = @_;
+
+    # TODO Prompt user to change to their home directory if they are not
+    # already in it
 
     # If the user supplied the path on the command-line...
     if ( $self->{'repo-path'} ) {
