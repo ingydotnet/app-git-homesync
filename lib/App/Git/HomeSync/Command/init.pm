@@ -121,6 +121,7 @@ sub _build__repo_dir {
         -timeout => 30, # (To allow for running non-interactively in a
                         # test script)
         -verbatim,
+        -complete => 'filenames',
         -default => $repo_dir_default->stringify,
     );
     $user_repo_dir = Path::Class::Dir->new($user_repo_dir);
