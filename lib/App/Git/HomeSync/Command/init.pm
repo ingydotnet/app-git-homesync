@@ -54,6 +54,7 @@ has '_is_repo_path_supplied' => (
     required => 0,
 );
 
+# TODO Rename to 'master-repo'
 has 'repo-path' => (
     isa           => 'Str',
     is            => 'rw',
