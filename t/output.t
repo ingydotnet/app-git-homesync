@@ -37,35 +37,6 @@ check_actions(
     },
 );
 
-sub get_regexes {
-    my $opts = shift;
-    my $regexes = {
-        (   'init' => $opts->{has_repo_path} ?
-
-            [ qr/^\$ git init/,
-              qr/^\$ git config/,
-              qr/^\$ git remote/,
-              qr/^\$ git fetch/,
-              qr/^\$ git branch/,
-              qr/^\$ git checkout/, ]
-
-          : [ qr/^\$ git init --bare/,
-              qr/^\$ git init/,
-              qr/^\$ git config/,
-              qr/^\$ git remote/,
-              qr/^\$ git fetch/,
-              qr/^\$ git branch/,
-              qr/^\$ git checkout/,
-              qr/^\$ git config/,
-              qr/^\$ git config/,
-              qr/^\$ git commit/,
-              qr/^\$ git push/, ]
-        ),
-        'config' => [qr/^\$ git config/],
-    };
-    return $regexes->{ $opts->{action} };
-}
-
 sub check_actions {
     my $args    = shift;
     my @actions = @{ $args->{actions} };
@@ -106,6 +77,35 @@ sub check_actions {
             done_testing;
         }
     }
+}
+
+sub get_regexes {
+    my $opts = shift;
+    my $regexes = {
+        (   'init' => $opts->{has_repo_path} ?
+
+            [ qr/^\$ git init/,
+              qr/^\$ git config/,
+              qr/^\$ git remote/,
+              qr/^\$ git fetch/,
+              qr/^\$ git branch/,
+              qr/^\$ git checkout/, ]
+
+          : [ qr/^\$ git init --bare/,
+              qr/^\$ git init/,
+              qr/^\$ git config/,
+              qr/^\$ git remote/,
+              qr/^\$ git fetch/,
+              qr/^\$ git branch/,
+              qr/^\$ git checkout/,
+              qr/^\$ git config/,
+              qr/^\$ git config/,
+              qr/^\$ git commit/,
+              qr/^\$ git push/, ]
+        ),
+        'config' => [qr/^\$ git config/],
+    };
+    return $regexes->{ $opts->{action} };
 }
 
 done_testing;
