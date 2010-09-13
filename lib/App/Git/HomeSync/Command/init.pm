@@ -224,7 +224,7 @@ sub _build__git_remote_add_cmd {
     return $remote_add_cmd;
 }
 
-sub validate_args {
+sub validate {
     my ( $self, $opt, $args ) = @_;
     $self->usage_error('No arguments are expected') if @$args;
 }

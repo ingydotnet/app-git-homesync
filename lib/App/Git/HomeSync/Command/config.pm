@@ -6,7 +6,7 @@ extends qw(App::Git::HomeSync::Command);
 
 sub abstract { q{Update user.name to CURRENT_USER@CURRENT_HOSTNAME} }
 
-sub validate_args {
+sub validate {
     my ( $self, $opt, $args ) = @_;
     $self->usage_error('No arguments are expected') if @$args;
 }
