@@ -161,8 +161,7 @@ sub _build__git_checkout_cmd {
     return q{git checkout master .};
 }
 
-sub validate_args
-{
+sub validate_args {
     my ( $self, $opt, $args ) = @_;
     die $self->_usage_text if $self->help_flag;
     $self->validate( $opt, $args );
