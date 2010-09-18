@@ -109,11 +109,8 @@ has '_repo_dir' => (
 sub _build__repo_dir {
     my $self = shift;
 
-    # TODO Move to attribute in Command.pm: _home_dir
-    my $home_dir = File::HomeDir->my_home;
-    my $repo_dir_default = Path::Class::Dir->new(
-        $home_dir, 'var', 'git'
-    );
+    my $home_dir = $self->_home_dir;
+    my $repo_dir_default = $home_dir->subdir(qw( var git ));
 
     my $user_repo_dir = prompt(
         (   sprintf q{Where shall we create the master repository? [%s]},

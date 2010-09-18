@@ -6,6 +6,7 @@ extends qw(MooseX::App::Cmd::Command);
 
 use App::Git::HomeSync::Util;
 
+use MooseX::Types::Path::Class;
 use Sys::Hostname qw(hostname);
 
 has 'debug' => (
@@ -39,6 +40,18 @@ has '_hostname' => (
     default  => hostname,
 );
 
+has '_home_dir' => (
+    is         => 'ro',
+    isa        => 'Path::Class::Dir',
+    required   => 1,
+    coerce     => 1,
+    lazy_build => 1,
+);
+
+sub _build__home_dir {
+    my $home_dir = File::HomeDir->my_home;
+    return $home_dir;
+}
 
 has '_git_init_cmd' => (
     isa        => 'Str',

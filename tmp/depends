@@ -2,6 +2,7 @@ TODO Specify version numbers of modules
 
 Test::More 0.94
 Path::Class 0.19
+MooseX::Types::Path::Class
 File::chdir 1.004
 File::Copy::Recursive 0.38
 File::HomeDir 0.91
