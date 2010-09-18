@@ -86,7 +86,7 @@ sub get_regexes {
 
             [ qr|^\$ git init|,
               qr|^\$ git config|,
-              qr|^\$ git remote|,
+              qr|^\$ git remote add .+bleh|,
               qr|^\$ git fetch|,
               qr|^\$ git branch|,
               qr|^\$ git checkout|, ]
@@ -94,7 +94,8 @@ sub get_regexes {
           : [ qr|^\$ git init --bare|,
               qr|^\$ git init|,
               qr|^\$ git config|,
-              qr|^\$ git remote|,
+              qr|^\$ git remote add .+var/git/|, # XXX Default contains
+                                                 # "var" and "git"
               qr|^\$ git fetch|,
               qr|^\$ git branch|,
               qr|^\$ git checkout|,
