@@ -12,9 +12,6 @@ check_actions(
         options => [
             '--dry-run',
             '--master-repo=/tmp/bleh.git',
-            #'--other-user=tommy',
-            #'--other-host=192.168.1.102',
-            #'--other-hostname=teebox',
         ],
         has_master_repo => 1,
     },
@@ -24,9 +21,6 @@ check_actions(
     {   actions => ['init'],
         options => [
             '--dry-run',
-            #'--other-user=tommy',
-            #'--other-host=192.168.1.102',
-            #'--other-hostname=teebox',
         ],
     },
 );

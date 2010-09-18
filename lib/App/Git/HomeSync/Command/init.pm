@@ -15,37 +15,6 @@ sub abstract {
 
 use Cwd qw(getcwd);
 
-# XXX Still needed?
-has 'other-user' => (
-    isa           => 'Str',
-    is            => 'rw',
-    required      => 0,
-    default       => sub { $ENV{USER} },
-    traits        => ['MooseX::Getopt::Meta::Attribute::Trait'],
-    documentation => 'The user of the other box that you want to sync '
-                   . 'with',
-);
-
-# XXX Still needed?
-has 'other-host' => (
-    isa           => 'Str',
-    is            => 'rw',
-    required      => 0,
-    traits        => ['MooseX::Getopt::Meta::Attribute::Trait'],
-    documentation => 'The address of the other box that you want to '
-                   . 'sync with',
-);
-
-# XXX Still needed?
-has 'other-hostname' => (
-    isa           => 'Str',
-    is            => 'rw',
-    required      => 0,
-    traits        => ['MooseX::Getopt::Meta::Attribute::Trait'],
-    documentation => 'The hostname of the other box that you want to '
-                   . 'sync with',
-);
-
 has 'master-repo' => (
     isa           => 'Str',
     is            => 'rw',
