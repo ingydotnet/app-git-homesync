@@ -60,18 +60,12 @@ has 'master-repo' => (
     required      => 0,
     traits        => ['MooseX::Getopt::Meta::Attribute::Trait'],
     documentation => 'The full path to the master repository to sync to',
-    #lazy          => 1,
-    #default       => sub { shift->_master_repo },
 );
 
 has '_master_repo' => (
-    isa           => 'Str',
-    is            => 'rw',
-    required      => 0,
-#    traits        => ['MooseX::Getopt::Meta::Attribute::Trait'],
-#    documentation => 'The full path to the master repository to sync to',
-#    lazy          => 1,
-#    builder       => '_build_master_repo',
+    isa        => 'Str',
+    is         => 'rw',
+    required   => 0,
     lazy_build => 1,
 );
 
@@ -94,14 +88,9 @@ around '_master_repo' => sub {
 };
 
 has '_repo_dir' => (
-    isa           => 'Str',
-    is            => 'rw',
-    required      => 0,
-#    traits        => ['MooseX::Getopt::Meta::Attribute::Trait'],
-#    documentation => 'The directory name to contain the master '
-#                   . 'repository to be created',
-#    lazy          => 1,
-#    builder       => '_build_repo_dir',
+    isa        => 'Str',
+    is         => 'rw',
+    required   => 0,
     lazy_build => 1,
 );
 
@@ -127,13 +116,9 @@ sub _build__repo_dir {
 }
 
 has '_repo_name' => (
-    isa           => 'Str',
-    is            => 'rw',
-    required      => 0,
-#    traits        => ['MooseX::Getopt::Meta::Attribute::Trait'],
-#    documentation => 'The name of the master repository to create',
-#    lazy          => 1,
-#    builder       => '_build_repo_name',
+    isa        => 'Str',
+    is         => 'rw',
+    required   => 0,
     lazy_build => 1,
 );
 
@@ -150,8 +135,6 @@ sub _build__repo_name {
         -verbatim,
         -default => $repo_name_default,
     );
-    #$user_repo_name = Path::Class::Dir->new($user_repo_name);
-    #return $user_repo_name->stringify;
     return $user_repo_name;
 }
 
