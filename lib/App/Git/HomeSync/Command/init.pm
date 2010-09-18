@@ -46,14 +46,6 @@ has 'other-hostname' => (
                    . 'sync with',
 );
 
-# XXX Still needed?
-has '_is_master_repo_supplied' => (
-    isa      => 'Bool',
-    is       => 'rw',
-    default  => 0,
-    required => 0,
-);
-
 has 'master-repo' => (
     isa           => 'Str',
     is            => 'rw',
@@ -198,7 +190,6 @@ sub execute {
 
     # If the user supplied the path on the command-line...
     if ( $self->{'master-repo'} ) {
-    #if ( $self->_is_master_repo_supplied ) {
         $self->_sync_with_master_repo();
     }
     # Create the repo (and thereby the path)
