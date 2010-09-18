@@ -155,24 +155,6 @@ sub _build__remote_branch_name {
     return $remote_branch_name;
 }
 
-# XXX Still needed?
-has '_other_master_repo' => (
-    isa        => 'Str',
-    is         => 'ro',
-    lazy_build => 1,
-);
-
-sub _build__other_master_repo {
-    my $self = shift;
-    my ( $path, $user, $other_user )
-        = ( getcwd, $self->_user, $self->{'other-user'} );
-    # FIXME
-    $path =~ s!^(/(?:home|Users)/)$user!$1$other_user!;
-
-    return $path;
-}
-
-
 has '_git_remote_add_cmd' => (
     isa        => 'Str',
     is         => 'ro',
