@@ -11,12 +11,12 @@ check_actions(
     {   actions => ['init'],
         options => [
             '--dry-run',
-            '--repo-path=/tmp/bleh.git',
+            '--master-repo=/tmp/bleh.git',
             #'--other-user=tommy',
             #'--other-host=192.168.1.102',
             #'--other-hostname=teebox',
         ],
-        has_repo_path => 1,
+        has_master_repo => 1,
     },
 );
 
@@ -52,7 +52,7 @@ sub check_actions {
 
         my $regexes = get_regexes(
             {   action        => $action,
-                has_repo_path => $args->{has_repo_path}
+                has_master_repo => $args->{has_master_repo}
             }
         );
         cmp_ok( scalar @given_output, '==', scalar @$regexes,
@@ -82,7 +82,7 @@ sub check_actions {
 sub get_regexes {
     my $opts = shift;
     my $regexes = {
-        (   'init' => $opts->{has_repo_path} ?
+        (   'init' => $opts->{has_master_repo} ?
 
             [ qr|^\$ git init|,
               qr|^\$ git config|,

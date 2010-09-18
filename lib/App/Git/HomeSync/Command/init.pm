@@ -10,7 +10,7 @@ use File::HomeDir ();
 use Path::Class::Dir ();
 
 sub abstract {
-    q{Supply the --repo-path option to sync directly}
+    q{Supply the --master-repo option to sync directly}
 }
 
 use Cwd qw(getcwd);
@@ -47,50 +47,49 @@ has 'other-hostname' => (
 );
 
 # XXX Still needed?
-has '_is_repo_path_supplied' => (
+has '_is_master_repo_supplied' => (
     isa      => 'Bool',
     is       => 'rw',
     default  => 0,
     required => 0,
 );
 
-# TODO Rename to 'master-repo'
-has 'repo-path' => (
+has 'master-repo' => (
     isa           => 'Str',
     is            => 'rw',
     required      => 0,
     traits        => ['MooseX::Getopt::Meta::Attribute::Trait'],
     documentation => 'The full path to the master repository to sync to',
     #lazy          => 1,
-    #default       => sub { shift->_repo_path },
+    #default       => sub { shift->_master_repo },
 );
 
-has '_repo_path' => (
+has '_master_repo' => (
     isa           => 'Str',
     is            => 'rw',
     required      => 0,
 #    traits        => ['MooseX::Getopt::Meta::Attribute::Trait'],
 #    documentation => 'The full path to the master repository to sync to',
 #    lazy          => 1,
-#    builder       => '_build_repo_path',
+#    builder       => '_build_master_repo',
     lazy_build => 1,
 );
 
-sub _build__repo_path {
+sub _build__master_repo {
     my $self = shift;
 
-    my $repo_path = Path::Class::Dir->new(
+    my $master_repo = Path::Class::Dir->new(
         $self->_repo_dir, $self->_repo_name
     );
-    return $repo_path->stringify;
+    return $master_repo->stringify;
 }
 
-around '_repo_path' => sub {
+around '_master_repo' => sub {
     my $orig = shift;
     my $self = shift;
 
-    # Don't prompt for paths if --repo-path was on the command-line
-    return $self->{'repo-path'} if $self->{'repo-path'};
+    # Don't prompt for paths if --master-repo was on the command-line
+    return $self->{'master-repo'} if $self->{'master-repo'};
     return $self->$orig(@_);
 };
 
@@ -174,13 +173,13 @@ sub _build__remote_branch_name {
 }
 
 # XXX Still needed?
-has '_other_repo_path' => (
+has '_other_master_repo' => (
     isa        => 'Str',
     is         => 'ro',
     lazy_build => 1,
 );
 
-sub _build__other_repo_path {
+sub _build__other_master_repo {
     my $self = shift;
     my ( $path, $user, $other_user )
         = ( getcwd, $self->_user, $self->{'other-user'} );
@@ -203,16 +202,16 @@ sub _build__git_remote_add_cmd {
     my $url;
     if (   $self->{'other-user'}
         && $self->{'other-host'}
-        && $self->_other_repo_path )
+        && $self->_other_master_repo )
     {
         # XXX Still needed?
         $url = sprintf q{%s@%s:%s},
             $self->{'other-user'},
             $self->{'other-host'},
-            $self->_other_repo_path;
+            $self->_other_master_repo;
     }
     else {
-        $url = $self->_repo_path;
+        $url = $self->_master_repo;
     }
 
     my $remote_add_cmd = sprintf q{git remote add %s '%s'},
@@ -233,8 +232,8 @@ sub execute {
     # already in it
 
     # If the user supplied the path on the command-line...
-    if ( $self->{'repo-path'} ) {
-    #if ( $self->_is_repo_path_supplied ) {
+    if ( $self->{'master-repo'} ) {
+    #if ( $self->_is_master_repo_supplied ) {
         $self->_sync_with_master_repo();
     }
     # Create the repo (and thereby the path)
@@ -268,16 +267,16 @@ sub _initialize_master_repo_and_sync {
 
     my $orig_path = Path::Class::Dir->new();
 
-    my $repo_path = Path::Class::Dir->new(
-        $self->_repo_path
+    my $master_repo = Path::Class::Dir->new(
+        $self->_master_repo
     );
 
     unless ( $self->{'dry-run'} ) {
-        $repo_path->mkpath unless -d $repo_path->stringify;
+        $master_repo->mkpath unless -d $master_repo->stringify;
     }
 
     unless ( $self->{'dry-run'} ) {
-        $CWD = $repo_path->stringify;
+        $CWD = $master_repo->stringify;
     }
     App::Git::HomeSync::Util->run_cmds(
         {   dry_run => $self->{'dry-run'},
