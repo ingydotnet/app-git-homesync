@@ -139,12 +139,7 @@ has '_remote_branch_name' => (
 );
 
 sub _build__remote_branch_name {
-    my $self = shift;
-    my $remote_branch_name
-        = $self->{'other-hostname'} ?
-          $self->{'other-hostname'}
-        : 'origin';
-    return $remote_branch_name;
+    return q{origin};
 }
 
 has '_git_remote_add_cmd' => (
