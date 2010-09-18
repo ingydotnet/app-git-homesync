@@ -84,24 +84,24 @@ sub get_regexes {
     my $regexes = {
         (   'init' => $opts->{has_repo_path} ?
 
-            [ qr/^\$ git init/,
-              qr/^\$ git config/,
-              qr/^\$ git remote/,
-              qr/^\$ git fetch/,
-              qr/^\$ git branch/,
-              qr/^\$ git checkout/, ]
+            [ qr|^\$ git init|,
+              qr|^\$ git config|,
+              qr|^\$ git remote|,
+              qr|^\$ git fetch|,
+              qr|^\$ git branch|,
+              qr|^\$ git checkout|, ]
 
-          : [ qr/^\$ git init --bare/,
-              qr/^\$ git init/,
-              qr/^\$ git config/,
-              qr/^\$ git remote/,
-              qr/^\$ git fetch/,
-              qr/^\$ git branch/,
-              qr/^\$ git checkout/,
-              qr/^\$ git config/,
-              qr/^\$ git config/,
-              qr/^\$ git commit/,
-              qr/^\$ git push/, ]
+          : [ qr|^\$ git init --bare|,
+              qr|^\$ git init|,
+              qr|^\$ git config|,
+              qr|^\$ git remote|,
+              qr|^\$ git fetch|,
+              qr|^\$ git branch|,
+              qr|^\$ git checkout|,
+              qr|^\$ git config|,
+              qr|^\$ git config|,
+              qr|^\$ git commit|,
+              qr|^\$ git push|, ]
         ),
         'config' => [qr/^\$ git config/],
     };
