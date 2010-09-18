@@ -13,4 +13,4 @@ Carp
 autodie
 IPC::System::Simple
 Sys::Hostname
-IO::Prompter
+IO::Prompter 0.001001
