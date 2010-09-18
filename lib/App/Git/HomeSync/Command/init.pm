@@ -169,9 +169,6 @@ sub _initialize_master_repo_and_sync {
     unless ( $self->{'dry-run'} ) {
         $CWD = $orig_path->stringify;
     }
-    # TODO Move aside conflicting files
-    # TODO Add .gitignore after empty commit
-    # TODO Add more diagnostics if the --allow-empty commit autodies
     App::Git::HomeSync::Util->run_cmds(
         {   dry_run => $self->{'dry-run'},
             debug   => $self->{debug},
@@ -181,12 +178,36 @@ sub _initialize_master_repo_and_sync {
                     _git_config_user_cmd
                     _git_remote_add_cmd
                     _git_fetch_cmd
-                    _git_branch_cmd
-                    _git_checkout_cmd
+                    _git_branch_cmd )
+            ],
+        }
+    );
+
+    # TODO Move aside conflicting files
+
+    App::Git::HomeSync::Util->run_cmds(
+        {   dry_run => $self->{'dry-run'},
+            debug   => $self->{debug},
+            cmds    => [
+                map { $self->$_ }
+                # TODO Add more diagnostics if the --allow-empty commit
+                # autodies
+                qw( _git_checkout_cmd
                     _git_config_branch_remote_cmd
                     _git_config_branch_merge_cmd
-                    _git_commit_empty_cmd
-                    _git_push_cmd )
+                    _git_commit_empty_cmd )
+            ],
+        }
+    );
+
+    # TODO Add .gitignore after empty commit
+
+    App::Git::HomeSync::Util->run_cmds(
+        {   dry_run => $self->{'dry-run'},
+            debug   => $self->{debug},
+            cmds    => [
+                map { $self->$_ }
+                qw( _git_push_cmd )
             ],
         }
     );
