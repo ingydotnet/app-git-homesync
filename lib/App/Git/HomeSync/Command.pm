@@ -135,6 +135,34 @@ sub _build__git_push_cmd {
     return q{git push};
 }
 
+has '_remote_branch_name' => (
+    isa        => 'Str',
+    is         => 'ro',
+    required   => 1,
+    lazy_build => 1,
+);
+
+sub _build__remote_branch_name {
+    return q{origin};
+}
+
+has '_git_remote_add_cmd' => (
+    isa        => 'Str',
+    is         => 'ro',
+    lazy_build => 1,
+);
+
+sub _build__git_remote_add_cmd {
+    my $self = shift;
+
+    my $url = $self->_master_repo;
+
+    my $remote_add_cmd = sprintf q{git remote add %s '%s'},
+        $self->_remote_branch_name,
+        $url;
+    return $remote_add_cmd;
+}
+
 has '_git_fetch_cmd' => (
     isa        => 'Str',
     is         => 'ro',

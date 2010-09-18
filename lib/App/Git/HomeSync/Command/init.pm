@@ -99,35 +99,6 @@ sub _build__repo_name {
     return $user_repo_name;
 }
 
-# TODO Try to move these non-option attributes to Command.pm
-has '_remote_branch_name' => (
-    isa        => 'Str',
-    is         => 'ro',
-    required   => 1,
-    lazy_build => 1,
-);
-
-sub _build__remote_branch_name {
-    return q{origin};
-}
-
-has '_git_remote_add_cmd' => (
-    isa        => 'Str',
-    is         => 'ro',
-    lazy_build => 1,
-);
-
-sub _build__git_remote_add_cmd {
-    my $self = shift;
-
-    my $url = $self->_master_repo;
-
-    my $remote_add_cmd = sprintf q{git remote add %s '%s'},
-        $self->_remote_branch_name,
-        $url;
-    return $remote_add_cmd;
-}
-
 sub validate {
     my ( $self, $opt, $args ) = @_;
     $self->usage_error('No arguments are expected') if @$args;
