@@ -226,6 +226,7 @@ sub _move_aside_conflicting_files {
         foreach my $file (@awaiting_remote_files) {
             chomp $file; # Remove the newline from the command
             if ( -f $file || -d $file ) {
+                # TODO Try MooseX::Types::DateTime
                 my $dt   = DateTime->now->set_time_zone('local');
                 my $date = $dt->strftime('%Y%m%d');
                 my ( $old_filename, $new_filename ) =
