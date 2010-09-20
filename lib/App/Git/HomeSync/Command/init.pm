@@ -123,7 +123,6 @@ sub execute {
 sub _sync_with_master_repo {
     my $self = shift;
 
-    # TODO Move aside conflicting files
     App::Git::HomeSync::Util->run_cmds(
         {   dry_run => $self->{'dry-run'},
             debug   => $self->{debug},
@@ -133,8 +132,19 @@ sub _sync_with_master_repo {
                     _git_config_user_cmd
                     _git_remote_add_cmd
                     _git_fetch_cmd
-                    _git_branch_cmd
-                    _git_checkout_cmd )
+                    _git_branch_cmd )
+            ],
+        }
+    );
+
+    $self->_move_aside_conflicting_files;
+
+    App::Git::HomeSync::Util->run_cmds(
+        {   dry_run => $self->{'dry-run'},
+            debug   => $self->{debug},
+            cmds => [
+                map { $self->$_ }
+                qw( _git_checkout_cmd )
             ],
         }
     );
@@ -183,7 +193,7 @@ sub _initialize_master_repo_and_sync {
         }
     );
 
-    # TODO Move aside conflicting files
+    $self->_move_aside_conflicting_files;
 
     App::Git::HomeSync::Util->run_cmds(
         {   dry_run => $self->{'dry-run'},

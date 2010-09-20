@@ -8,6 +8,8 @@ use App::Git::HomeSync::Util;
 
 use MooseX::Types::Path::Class;
 use Sys::Hostname qw(hostname);
+use DateTime;
+use File::Copy qw(move);
 
 has 'debug' => (
     isa           => 'Bool',
@@ -206,6 +208,33 @@ sub validate_args {
     my ( $self, $opt, $args ) = @_;
     die $self->_usage_text if $self->help_flag;
     $self->validate( $opt, $args );
+}
+
+sub _move_aside_conflicting_files {
+    my $self = shift;
+
+    # TODO Create attribute for use by this and _git_branch_cmd?
+    my $remote_branch = sprintf '%s/master', $self->_remote_branch_name;
+
+    my $git_ls_tree_cmd =
+        qq{git ls-tree --name-only $remote_branch 2>/dev/null};
+    my @awaiting_remote_files = qx{$git_ls_tree_cmd};
+    die 'Could not get a list of files in the repository'
+        if not scalar @awaiting_remote_files and not $self->{'dry-run'};
+    if ( @awaiting_remote_files and not $self->{'dry-run'} ) {
+        foreach my $file (@awaiting_remote_files) {
+            chomp $file; # Remove the newline from the command
+            if ( -f $file || -d $file ) {
+                my $dt   = DateTime->now->set_time_zone('local');
+                my $date = $dt->strftime('%Y%m%d');
+                my ( $old_filename, $new_filename ) =
+                    ( $file, ( sprintf '%s.bak%s', $file, $date ) );
+                move( $old_filename, $new_filename );
+                print STDERR qq{# "$old_filename" --> "$new_filename"\n}
+                    if $self->{debug};
+            }
+        }
+    }
 }
 
 __PACKAGE__->meta->make_immutable;
