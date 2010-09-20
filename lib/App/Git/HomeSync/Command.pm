@@ -210,6 +210,7 @@ sub validate_args {
     $self->validate( $opt, $args );
 }
 
+# TODO Consider trying Git::PurePerl
 sub _move_aside_conflicting_files {
     my $self = shift;
 
