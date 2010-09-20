@@ -8,6 +8,9 @@ use File::chdir qw( $CWD );
 use IO::Prompter;
 use File::HomeDir ();
 use Path::Class::Dir ();
+use IO::All qw(io);
+# XXX Needed?
+use autodie qw(:io);
 
 sub abstract {
     q{Supply the --master-repo option to sync directly}
@@ -210,7 +213,9 @@ sub _initialize_master_repo_and_sync {
         }
     );
 
-    # TODO Add .gitignore after empty commit
+    my $gitignore_text = App::Git::HomeSync::Util->get_gitignore;
+    io('.gitignore')->print($gitignore_text)
+        if not $self->{'dry-run'};
 
     App::Git::HomeSync::Util->run_cmds(
         {   dry_run => $self->{'dry-run'},

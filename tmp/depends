@@ -15,3 +15,5 @@ autodie
 IPC::System::Simple
 Sys::Hostname
 IO::Prompter 0.001001
+Data::Section 0.101620
+IO::All 0.39
