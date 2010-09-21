@@ -1,7 +1,7 @@
 package App::Git::HomeSync::Util;
 use Carp qw(croak);
 use autodie qw(:system);
-use Data::Section -setup => { inherit => 1 };
+use Data::Section -setup => { inherit => 0 };
 
 sub run_cmds {
     my ( $class, $args ) = @_;
