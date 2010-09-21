@@ -9,6 +9,8 @@ use App::Git::HomeSync::Util;
 use MooseX::Types::Path::Class;
 use Sys::Hostname qw(hostname);
 use DateTime;
+use Cwd qw(getcwd);
+use Git::PurePerl ();
 use File::Copy qw(move);
 
 has 'debug' => (
@@ -53,6 +55,37 @@ has '_home_dir' => (
 sub _build__home_dir {
     my $home_dir = File::HomeDir->my_home;
     return $home_dir;
+}
+
+has '_cwd' => (
+    is         => 'ro',
+    isa        => 'Path::Class::Dir',
+    required   => 1,
+    coerce     => 1,
+    lazy_build => 1,
+);
+
+sub _build__cwd {
+    my $cwd = getcwd;
+    return $cwd;
+}
+
+has '_git_obj' => (
+    is         => 'ro',
+    isa        => 'Git::PurePerl',
+    required   => 0,
+    lazy_build => 1,
+);
+
+sub _build__git_obj {
+    my $self = shift;
+
+    my $cwd = $self->_cwd;
+    my $git = Git::PurePerl->new(
+        directory => $cwd->stringify
+    );
+
+    return $git;
 }
 
 has '_git_init_cmd' => (
@@ -210,28 +243,36 @@ sub validate_args {
     $self->validate( $opt, $args );
 }
 
-# TODO Consider trying Git::PurePerl
 sub _move_aside_conflicting_files {
     my $self = shift;
+    return 0 if $self->{'dry-run'};
 
-    # TODO Create attribute for use by this and _git_branch_cmd?
-    my $remote_branch = sprintf '%s/master', $self->_remote_branch_name;
+    my $remote_branch_ref =
+        sprintf 'refs/remotes/%s/master',
+        $self->_remote_branch_name;
 
-    my $git_ls_tree_cmd =
-        qq{git ls-tree --name-only $remote_branch 2>/dev/null};
-    my @awaiting_remote_files = qx{$git_ls_tree_cmd};
+    my $git = $self->_git_obj;
+
+    my $remote_branch_sha1 = $git->ref_sha1($remote_branch_ref);
+    my $remote_branch_obj  = $git->get_object($remote_branch_sha1);
+    my $remote_dirs        = $remote_branch_obj->tree->{directory_entries};
+
+    my @awaiting_remote_files =
+        map { $_->{filename} } @$remote_dirs;
     die 'Could not get a list of files in the repository'
         if not scalar @awaiting_remote_files and not $self->{'dry-run'};
+
     if ( @awaiting_remote_files and not $self->{'dry-run'} ) {
         foreach my $file (@awaiting_remote_files) {
-            chomp $file; # Remove the newline from the command
             if ( -f $file || -d $file ) {
                 # TODO Try MooseX::Types::DateTime
                 my $dt   = DateTime->now->set_time_zone('local');
                 my $date = $dt->strftime('%Y%m%d');
+
                 my ( $old_filename, $new_filename ) =
                     ( $file, ( sprintf '%s.bak%s', $file, $date ) );
                 move( $old_filename, $new_filename );
+
                 print STDERR qq{# "$old_filename" --> "$new_filename"\n}
                     if $self->{debug};
             }

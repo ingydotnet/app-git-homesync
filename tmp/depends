@@ -17,3 +17,4 @@ Sys::Hostname
 IO::Prompter 0.001001
 Data::Section 0.101620
 IO::All 0.39
+Git::PurePerl 0.47
