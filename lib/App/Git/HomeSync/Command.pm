@@ -255,10 +255,10 @@ sub _move_aside_conflicting_files {
 
     my $remote_branch_sha1 = $git->ref_sha1($remote_branch_ref);
     my $remote_branch_obj  = $git->get_object($remote_branch_sha1);
-    my $remote_dirs        = $remote_branch_obj->tree->{directory_entries};
+    my $remote_file_objs   = $remote_branch_obj->tree->{directory_entries};
 
     my @awaiting_remote_files =
-        map { $_->{filename} } @$remote_dirs;
+        map { $_->{filename} } @$remote_file_objs;
     die 'Could not get a list of files in the repository'
         if not scalar @awaiting_remote_files and not $self->{'dry-run'};
 
