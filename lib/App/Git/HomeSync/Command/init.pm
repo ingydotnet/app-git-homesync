@@ -214,6 +214,7 @@ sub _initialize_master_repo_and_sync {
     my $gitignore_text = App::Git::HomeSync::Util->get_gitignore;
     io('.gitignore')->print($gitignore_text)
         if not $self->{'dry-run'};
+    # TODO git add and git commit of .gitignore
 
     App::Git::HomeSync::Util->run_cmds(
         {   dry_run => $self->{'dry-run'},
