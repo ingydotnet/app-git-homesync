@@ -16,8 +16,6 @@ sub abstract {
     q{Supply the --master-repo option to sync directly}
 }
 
-use Cwd qw(getcwd);
-
 has 'master-repo' => (
     isa           => 'Str',
     is            => 'rw',
