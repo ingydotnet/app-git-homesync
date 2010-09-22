@@ -255,7 +255,7 @@ sub _move_aside_conflicting_files {
 
     my $remote_branch_sha1 = $git->ref_sha1($remote_branch_ref);
     my $remote_branch_obj  = $git->get_object($remote_branch_sha1);
-    my $remote_file_objs   = $remote_branch_obj->tree->{directory_entries};
+    my $remote_file_objs   = $remote_branch_obj->tree->directory_entries;
 
     my @awaiting_remote_files =
         map { $_->{filename} } @$remote_file_objs;
