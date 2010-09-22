@@ -81,8 +81,8 @@ run_init();
         done_testing;
     };
 
-    my @moved_aside_files = grep /\.bash.+\.bak/, @filenames;
-    cmp_ok( scalar @moved_aside_files, '==', 2,
+    my @files_moved_aside = grep /\.bash.+\.bak/, @filenames;
+    cmp_ok( scalar @files_moved_aside, '==', 2,
         '2 bash files were moved aside' );
 }
 
