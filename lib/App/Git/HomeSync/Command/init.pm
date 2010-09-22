@@ -13,39 +13,39 @@ use IO::All qw(io);
 use autodie qw(:io);
 
 sub abstract {
-    q{Supply the --master-repo option to sync directly}
+    q{Supply the --central-repo option to sync directly}
 }
 
-has 'master-repo' => (
+has 'central-repo' => (
     isa           => 'Str',
     is            => 'rw',
     required      => 0,
     traits        => ['MooseX::Getopt::Meta::Attribute::Trait'],
-    documentation => 'The full path to the master repository to sync to',
+    documentation => 'The full path to the central repository to sync to',
 );
 
-has '_master_repo' => (
+has '_central_repo' => (
     isa        => 'Str',
     is         => 'rw',
     required   => 0,
     lazy_build => 1,
 );
 
-sub _build__master_repo {
+sub _build__central_repo {
     my $self = shift;
 
-    my $master_repo = Path::Class::Dir->new(
+    my $central_repo = Path::Class::Dir->new(
         $self->_repo_dir, $self->_repo_name
     );
-    return $master_repo->stringify;
+    return $central_repo->stringify;
 }
 
-around '_master_repo' => sub {
+around '_central_repo' => sub {
     my $orig = shift;
     my $self = shift;
 
-    # Don't prompt for paths if --master-repo was on the command-line
-    return $self->{'master-repo'} if $self->{'master-repo'};
+    # Don't prompt for paths if --central-repo was on the command-line
+    return $self->{'central-repo'} if $self->{'central-repo'};
     return $self->$orig(@_);
 };
 
@@ -63,7 +63,7 @@ sub _build__repo_dir {
     my $repo_dir_default = $home_dir->subdir(qw( var git ));
 
     my $user_repo_dir = prompt(
-        (   sprintf q{Where shall we create the master repository? [%s]},
+        (   sprintf q{Where shall we create the central repository? [%s]},
             $repo_dir_default->stringify
         ),
         -in => *STDIN,
@@ -89,7 +89,7 @@ sub _build__repo_name {
 
     my $repo_name_default = 'home.git';
     my $user_repo_name = prompt(
-        (   sprintf q{What do you want to name the master repository? [%s]},
+        (   sprintf q{What do you want to name the central repository? [%s]},
             $repo_name_default
         ),
         -in => *STDIN,
@@ -112,16 +112,16 @@ sub execute {
     # already in it
 
     # If the user supplied the path on the command-line...
-    if ( $self->{'master-repo'} ) {
-        $self->_sync_with_master_repo();
+    if ( $self->{'central-repo'} ) {
+        $self->_sync_with_central_repo();
     }
     # Create the repo (and thereby the path)
     else {
-        $self->_initialize_master_repo_and_sync();
+        $self->_initialize_central_repo_and_sync();
     }
 }
 
-sub _sync_with_master_repo {
+sub _sync_with_central_repo {
     my $self = shift;
 
     App::Git::HomeSync::Util->run_cmds(
@@ -151,21 +151,21 @@ sub _sync_with_master_repo {
     );
 }
 
-sub _initialize_master_repo_and_sync {
+sub _initialize_central_repo_and_sync {
     my $self = shift;
 
     my $orig_path = Path::Class::Dir->new();
 
-    my $master_repo = Path::Class::Dir->new(
-        $self->_master_repo
+    my $central_repo = Path::Class::Dir->new(
+        $self->_central_repo
     );
 
     unless ( $self->{'dry-run'} ) {
-        $master_repo->mkpath unless -d $master_repo->stringify;
+        $central_repo->mkpath unless -d $central_repo->stringify;
     }
 
     unless ( $self->{'dry-run'} ) {
-        $CWD = $master_repo->stringify;
+        $CWD = $central_repo->stringify;
     }
     App::Git::HomeSync::Util->run_cmds(
         {   dry_run => $self->{'dry-run'},

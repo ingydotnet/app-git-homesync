@@ -190,7 +190,7 @@ has '_git_remote_add_cmd' => (
 sub _build__git_remote_add_cmd {
     my $self = shift;
 
-    my $url = $self->_master_repo;
+    my $url = $self->_central_repo;
 
     my $remote_add_cmd = sprintf q{git remote add %s '%s'},
         $self->_remote_branch_name,

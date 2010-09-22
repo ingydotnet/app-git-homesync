@@ -11,9 +11,9 @@ check_actions(
     {   actions => ['init'],
         options => [
             '--dry-run',
-            '--master-repo=/tmp/bleh.git',
+            '--central-repo=/tmp/bleh.git',
         ],
-        has_master_repo => 1,
+        has_central_repo => 1,
     },
 );
 
@@ -46,7 +46,7 @@ sub check_actions {
 
         my $regexes = get_regexes(
             {   action        => $action,
-                has_master_repo => $args->{has_master_repo}
+                has_central_repo => $args->{has_central_repo}
             }
         );
         cmp_ok( scalar @given_output, '==', scalar @$regexes,
@@ -76,7 +76,7 @@ sub check_actions {
 sub get_regexes {
     my $opts = shift;
     my $regexes = {
-        (   'init' => $opts->{has_master_repo} ?
+        (   'init' => $opts->{has_central_repo} ?
 
             [ qr|^\$ git init|,
               qr|^\$ git config|,
