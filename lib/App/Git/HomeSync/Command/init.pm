@@ -145,7 +145,9 @@ sub _sync_with_central_repo {
             debug   => $self->{debug},
             cmds => [
                 map { $self->$_ }
-                qw( _git_checkout_cmd )
+                qw( _git_checkout_cmd
+                    _git_config_branch_remote_cmd
+                    _git_config_branch_merge_cmd )
             ],
         }
     );

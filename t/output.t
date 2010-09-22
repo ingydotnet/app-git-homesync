@@ -83,7 +83,9 @@ sub get_regexes {
               qr|^\$ git remote add .+bleh|,
               qr|^\$ git fetch|,
               qr|^\$ git branch|,
-              qr|^\$ git checkout|, ]
+              qr|^\$ git checkout|,
+              qr|^\$ git config|,
+              qr|^\$ git config|, ]
 
           : [ qr|^\$ git init --bare|,
               qr|^\$ git init|,
