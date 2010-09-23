@@ -100,7 +100,7 @@ sub get_regexes {
               qr|^\$ git commit|,
               qr|^\$ git push|, ]
         ),
-        'config' => [qr/^\$ git config/],
+        'config' => [qr|^\$ git config|],
     };
     return $regexes->{ $opts->{action} };
 }
