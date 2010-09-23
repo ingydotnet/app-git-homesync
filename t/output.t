@@ -86,6 +86,7 @@ sub get_regexes {
               qr|^\$ git checkout|,
               qr|^\$ git config|,
               qr|^\$ git config|, ]
+              # TODO commit, push?
 
           : [ qr|^\$ git init --bare|,
               qr|^\$ git init|,
