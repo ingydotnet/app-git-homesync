@@ -85,3 +85,36 @@
         - App::Info - determine if git is on the system and what version
             - Have a SKIP in the test suite if git is not on the system
         - IO::Prompter - for user input
+
+- Los Angeles Perl Mongers on 9/22/10
+    - Separate "root commit" for current files
+        - Merge in remote files
+            - Conflicts may occur...
+
+    - IPC::Simple
+        - capture output Test::MockModule
+            - steal a method name (override IPC::Run or IPC::Simple)
+
+    - .git/info/exclude
+        - overriding .gitignore
+        - ignore everything, user can git add manually
+
+    - Optimization
+        - autouse.pm (?)
+        - Devel::NYTProf
+
+    - MooseX::Getopt::Dashes
+    - MooseX::SimpleConfig
+        - HttpGrep
+            - github.com/jbarratt
+    - MooseX::LazyLogDispatch
+    - App::Cmd::Plugin::Prompt
+
+    Jekyll blog
+
+    Config management
+        - Spine
+        - Chef
+        - Puppet
+        - CFEngine
+        - CRuby
