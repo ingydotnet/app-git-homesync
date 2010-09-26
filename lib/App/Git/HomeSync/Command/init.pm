@@ -24,6 +24,7 @@ has 'central-repo' => (
     documentation => 'The full path to the central repository to sync to',
 );
 
+# TODO Convert to MooseX::Types::Path::Class
 has '_central_repo' => (
     isa        => 'Str',
     is         => 'rw',
@@ -49,6 +50,7 @@ around '_central_repo' => sub {
     return $self->$orig(@_);
 };
 
+# TODO Convert to MooseX::Types::Path::Class
 has '_repo_dir' => (
     isa        => 'Str',
     is         => 'rw',
