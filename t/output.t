@@ -9,32 +9,30 @@ use App::Git::HomeSync;
 
 check_actions(
     {   actions => ['init'],
-        options => [
-            '--dry-run',
-            '--central-repo=/tmp/bleh.git',
-        ],
+        options => {
+            'dry-run'      => undef,
+            'central-repo' => '/tmp/bleh.git',
+        },
         has_central_repo => 1,
     },
 );
 
 check_actions(
     {   actions => ['init'],
-        options => [
-            '--dry-run',
-        ],
+        options => { 'dry-run' => undef, },
     },
 );
 
 check_actions(
     {   actions => ['config'],
-        options => ['--dry-run']
+        options => { 'dry-run' => undef }
     },
 );
 
 sub check_actions {
     my $args    = shift;
     my @actions = @{ $args->{actions} };
-    my @options = $args->{options} ? @{ $args->{options} } : ();
+    my @options = @{ _prepare_options( $args->{options} ) };
 
     foreach my $action ( @actions ) {
         my $result = test_app( 'App::Git::HomeSync' => [ $action, @options ] );
@@ -104,6 +102,21 @@ sub _get_regexes {
         'config' => [qr|^\$ git config|],
     };
     return $regexes->{ $opts->{action} };
+}
+
+sub _prepare_options {
+    my $options = shift;
+
+    # Prepend dashes to options for the command-line
+    my @options;
+    foreach my $option_name (keys %$options) {
+        my $option = "--$option_name";
+        $option .= sprintf '=%s', $options->{$option_name}
+            if $options->{$option_name};
+        push @options, $option;
+    }
+
+    return \@options;
 }
 
 done_testing;
