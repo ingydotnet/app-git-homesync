@@ -44,7 +44,7 @@ sub check_actions {
         diag "OUTPUT:\n$given_output";
         my @given_output = split /\n/, $given_output;
 
-        my $regexes = get_regexes(
+        my $regexes = _get_regexes(
             {   action        => $action,
                 has_central_repo => $args->{has_central_repo}
             }
@@ -73,7 +73,7 @@ sub check_actions {
     }
 }
 
-sub get_regexes {
+sub _get_regexes {
     my $opts = shift;
     my $regexes = {
         (   'init' => $opts->{has_central_repo} ?
