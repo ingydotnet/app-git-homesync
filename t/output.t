@@ -8,8 +8,8 @@ use List::MoreUtils qw(any);
 
 use App::Git::HomeSync;
 
-check_actions(
-    {   actions => ['init'],
+check_action(
+    {   action  => 'init',
         options => {
             'dry-run'      => undef,
             'central-repo' => '/tmp/bleh.git',
@@ -17,58 +17,56 @@ check_actions(
     },
 );
 
-check_actions(
-    {   actions => ['init'],
+check_action(
+    {   action  => 'init',
         options => { 'dry-run' => undef, },
     },
 );
 
-check_actions(
-    {   actions => ['config'],
+check_action(
+    {   action  => 'config',
         options => { 'dry-run' => undef }
     },
 );
 
-sub check_actions {
+sub check_action {
     my $args         = shift;
-    my @actions      = @{ $args->{actions} };
+    my $action       = $args->{action};
     my %option_pairs = %{ $args->{options} };
     my @options      = @{ _prepare_options( $args->{options} ) };
 
-    foreach my $action ( @actions ) {
-        my $result = test_app( 'App::Git::HomeSync' => [ $action, @options ] );
+    my $result = test_app( 'App::Git::HomeSync' => [ $action, @options ] );
 
-        my $given_output = $result->output;
-        chomp $given_output; # Remove newline
-        diag "OUTPUT:\n$given_output";
-        my @given_output = split /\n/, $given_output;
+    my $given_output = $result->output;
+    chomp $given_output; # Remove newline
+    diag "OUTPUT:\n$given_output";
+    my @given_output = split /\n/, $given_output;
 
-        my $regexes = _get_regexes(
-            {   action       => $action,
-                option_pairs => \%option_pairs,
-            }
-        );
-        cmp_ok( scalar @given_output, '==', scalar @$regexes,
-            sprintf qq{"$action" action executed %s command(s)},
-            scalar @$regexes
-        ) or next;
-
-        subtest qq{"$action" action commands} => sub {
-            for ( my $i = 0; $i < @given_output; $i++ ) {
-                my $line  = $given_output[$i];
-                my $regex = $regexes->[$i];
-                # There should be a regex that matches in sequence with the
-                # output
-                if ( $regex ) {
-                    like $line, $regex, qq{Correct command};
-                }
-                else {
-                    fail qq{Too many lines were printed};
-                    last;
-                }
-            }
-            done_testing;
+    my $regexes = _get_regexes(
+        {   action       => $action,
+            option_pairs => \%option_pairs,
         }
+    );
+    cmp_ok( scalar @given_output, '==', scalar @$regexes,
+        sprintf qq{"$action" action executed %s command(s)},
+        scalar @$regexes
+    ) or next;
+
+    subtest qq{"$action" action commands} => sub {
+        for ( my $i = 0; $i < @given_output; $i++ ) {
+            my $line  = $given_output[$i];
+            my $regex = $regexes->[$i];
+            # There should be a regex that matches in sequence with the
+            # output
+            if ( $regex ) {
+                like $line, $regex, qq{Correct command};
+            }
+            else {
+                fail qq{Too many lines were printed};
+                last;
+            }
+        }
+        done_testing;
     }
 }
 
