@@ -73,9 +73,9 @@ sub check_actions {
 }
 
 sub _get_regexes {
-    my $opts         = shift;
-    my $action       = $opts->{action};
-    my %option_pairs = %{ $opts->{option_pairs} };
+    my $args         = shift;
+    my $action       = $args->{action};
+    my %option_pairs = %{ $args->{option_pairs} };
 
     my $has_central_repo
         = any { $_ eq 'central-repo' } keys %option_pairs;
