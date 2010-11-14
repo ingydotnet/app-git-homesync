@@ -4,6 +4,7 @@ use warnings;
 
 use Test::More;
 use App::Cmd::Tester qw(test_app);
+use List::MoreUtils qw(any);
 
 use App::Git::HomeSync;
 
@@ -13,7 +14,6 @@ check_actions(
             'dry-run'      => undef,
             'central-repo' => '/tmp/bleh.git',
         },
-        has_central_repo => 1,
     },
 );
 
@@ -30,9 +30,10 @@ check_actions(
 );
 
 sub check_actions {
-    my $args    = shift;
-    my @actions = @{ $args->{actions} };
-    my @options = @{ _prepare_options( $args->{options} ) };
+    my $args         = shift;
+    my @actions      = @{ $args->{actions} };
+    my %option_pairs = %{ $args->{options} };
+    my @options      = @{ _prepare_options( $args->{options} ) };
 
     foreach my $action ( @actions ) {
         my $result = test_app( 'App::Git::HomeSync' => [ $action, @options ] );
@@ -43,8 +44,8 @@ sub check_actions {
         my @given_output = split /\n/, $given_output;
 
         my $regexes = _get_regexes(
-            {   action        => $action,
-                has_central_repo => $args->{has_central_repo}
+            {   action       => $action,
+                option_pairs => \%option_pairs,
             }
         );
         cmp_ok( scalar @given_output, '==', scalar @$regexes,
@@ -72,9 +73,14 @@ sub check_actions {
 }
 
 sub _get_regexes {
-    my $opts = shift;
+    my $opts         = shift;
+    my $action       = $opts->{action};
+    my %option_pairs = %{ $opts->{option_pairs} };
+
+    my $has_central_repo
+        = any { $_ eq 'central-repo' } keys %option_pairs;
     my $regexes = {
-        (   'init' => $opts->{has_central_repo} ?
+        (   'init' => $has_central_repo ?
 
             [ qr|^\$ git init|,
               qr|^\$ git config|,
@@ -101,16 +107,17 @@ sub _get_regexes {
         ),
         'config' => [qr|^\$ git config|],
     };
-    return $regexes->{ $opts->{action} };
+
+    return $regexes->{$action};
 }
 
 sub _prepare_options {
-    my $options = shift;
+    my $option_pairs = shift;
 
     # Prepend dashes to options for the command-line
     my @options;
-    foreach my $option_name (keys %$options) {
-        my $option_value = $options->{$option_name};
+    foreach my $option_name (keys %$option_pairs) {
+        my $option_value = $option_pairs->{$option_name};
 
         my $option = "--$option_name";
         $option .= sprintf '=%s', $option_value

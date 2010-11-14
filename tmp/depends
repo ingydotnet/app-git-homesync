@@ -19,3 +19,4 @@ Data::Section 0.101620
 IO::All 0.39
 Git::PurePerl 0.47
 File::Path
+List::MoreUtils 0.25_02
