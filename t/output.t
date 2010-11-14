@@ -39,7 +39,6 @@ sub check_action {
 
     my $given_output = $result->output;
     chomp $given_output; # Remove newline
-    diag "OUTPUT:\n$given_output";
     my @given_output = split /\n/, $given_output;
 
     my $regexes = _get_regexes(
