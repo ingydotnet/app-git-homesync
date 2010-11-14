@@ -110,9 +110,12 @@ sub _prepare_options {
     # Prepend dashes to options for the command-line
     my @options;
     foreach my $option_name (keys %$options) {
+        my $option_value = $options->{$option_name};
+
         my $option = "--$option_name";
-        $option .= sprintf '=%s', $options->{$option_name}
-            if $options->{$option_name};
+        $option .= sprintf '=%s', $option_value
+            if $option_value;
+
         push @options, $option;
     }
 
