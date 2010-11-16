@@ -73,6 +73,10 @@ run_init();
     my @files = $working_dir->children;
     my @filenames = map { $_->stringify } @files;
 
+    my @files_moved_aside = grep /\.bash.+\.bak/, @filenames;
+    cmp_ok( scalar @files_moved_aside, '==', 2,
+        '2 bash files were moved aside' );
+
     subtest 'New files from git' => sub {
         foreach my $filename (qw( .gitignore .emacs .vimrc )) {
             ok -f $filename, "$filename now exists";
@@ -80,10 +84,6 @@ run_init();
 
         done_testing;
     };
-
-    my @files_moved_aside = grep /\.bash.+\.bak/, @filenames;
-    cmp_ok( scalar @files_moved_aside, '==', 2,
-        '2 bash files were moved aside' );
 }
 
 done_testing;
