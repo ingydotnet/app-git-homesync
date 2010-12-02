@@ -110,9 +110,9 @@
     - MooseX::LazyLogDispatch
     - App::Cmd::Plugin::Prompt
 
-    Jekyll blog
+    - Jekyll blog
 
-    Config management
+    - Config management
         - Spine
         - Chef
         - Puppet
