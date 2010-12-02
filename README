@@ -1,2 +1,10 @@
 See tmp/depends for the CPAN modules that are currently required.
 See tmp/notes for my train of thought.
+
+tmp/shell_cmds can be sourced for helpful shortcuts:
+$ . tmp/shell_cmds
+$ eval $cmd config --dry-run # Run the "config" action safely
+$ eval $test # Run the test suite through prove(1)
+$ eval "$test/output.t" # Run just a single test
+$ eval $debug_cmd config --dry-run # Use the Perl debugger
+$ eval "$debug_test/output.t" # Use the Perl debugger on a test

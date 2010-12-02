@@ -1,10 +1,4 @@
 #!/bin/sh
-# $ source THIS_FILE
-# ...then use like this:
-# eval $cmd config --dry-run
-# eval $debug_cmd config --dry-run
-# eval $test
-# eval $debug_test
 
 export cmd='clear; perl -Ilib ./bin/git-home-sync'
 export debug_cmd='clear; perl -Ilib -d ./bin/git-home-sync'
