@@ -73,6 +73,9 @@
     - Consider utilizing CPAN modules like:
         - App::Info - determine if git is on the system and what version
             - Have a SKIP in the test suite if git is not on the system
+        - PAR (Perl Archive Toolkit) to bundle up the program for quick
+          deployment
+            - http://search.cpan.org/dist/PAR-Dist/
 
 - Los Angeles Perl Mongers on 9/22/10
     - Separate "root commit" for current files
