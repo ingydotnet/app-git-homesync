@@ -1,5 +1,3 @@
-#!/bin/sh
-
 export cmd='clear; perl -Ilib ./bin/git-home-sync'
 export debug_cmd='clear; perl -Ilib -d ./bin/git-home-sync'
 export test='clear; prove -Ilib ./t/'
