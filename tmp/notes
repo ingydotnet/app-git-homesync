@@ -90,6 +90,7 @@
     - Optimization
         - autouse.pm (?)
         - Devel::NYTProf
+            - Git::PurePerl seems to be a huge performance hit
 
     - MooseX::Getopt::Dashes
     - MooseX::SimpleConfig
