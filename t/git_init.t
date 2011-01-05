@@ -8,6 +8,8 @@ use Archive::Extract ();
 #use App::Cmd::Tester qw(test_app);
 #use App::Git::HomeSync;
 
+# TODO Consider Directory::Scratch
+
 #use Git::PurePerl ();
 use Path::Class ();
 use File::Path qw( remove_tree );
