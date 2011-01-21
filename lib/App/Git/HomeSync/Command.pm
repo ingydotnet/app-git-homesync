@@ -11,6 +11,7 @@ has 'user' => (
     isa      => 'Str',
     is       => 'ro',
     required => 1,
+    # TODO Use getlogin() Perl built-in?
     default  => $ENV{USER},
 );
 
