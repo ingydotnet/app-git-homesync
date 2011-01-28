@@ -20,3 +20,4 @@ IO::All 0.39
 Git::PurePerl 0.47
 File::Path
 List::MoreUtils 0.25_02
+Lingua::EN::Numbers::Ordinate

@@ -4,6 +4,7 @@ use warnings;
 
 use Test::More;
 use App::Cmd::Tester qw(test_app);
+use Lingua::EN::Numbers::Ordinate qw(ordinate);
 use List::MoreUtils qw(any);
 
 use App::Git::HomeSync;
@@ -58,7 +59,13 @@ sub check_action {
             # There should be a regex that matches in sequence with the
             # output
             if ( $regex ) {
-                like $line, $regex, qq{Correct command};
+                like(
+                    $line, $regex,
+                    (   sprintf '%s command matches: %s',
+                        ordinate( $i + 1 ),
+                        $regex
+                    )
+                );
             }
             else {
                 fail qq{Too many lines were printed};
