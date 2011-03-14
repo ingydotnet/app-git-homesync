@@ -50,7 +50,7 @@ sub check_action {
     cmp_ok( scalar @given_output, '==', scalar @$regexes,
         sprintf qq{"$action" action executed %s command(s)},
         scalar @$regexes
-    ) or next;
+    );
 
     subtest qq{"$action" action commands} => sub {
         for ( my $i = 0; $i < @given_output; $i++ ) {
