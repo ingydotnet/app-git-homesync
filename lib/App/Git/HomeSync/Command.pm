@@ -1,12 +1,12 @@
 package App::Git::HomeSync::Command;
-use Moose;
+use Mouse;
 use namespace::autoclean;
 
-extends qw(MooseX::App::Cmd::Command);
+extends qw(MouseX::App::Cmd::Command);
 
 use App::Git::HomeSync::Util;
 
-use MooseX::Types::Path::Class;
+use MouseX::Types::Path::Class;
 use Sys::Hostname qw(hostname);
 use DateTime;
 use Cwd qw(getcwd);
@@ -16,7 +16,7 @@ use File::Copy qw(move);
 has 'debug' => (
     isa           => 'Bool',
     is            => 'rw',
-    traits        => ['MooseX::Getopt::Meta::Attribute::Trait'],
+    traits        => ['MouseX::Getopt::Meta::Attribute::Trait'],
     cmd_aliases   => 'd',
     # XXX Use --nodebug to disable output
     default       => 1,
@@ -26,7 +26,7 @@ has 'debug' => (
 has 'dry-run' => (
     isa           => 'Bool',
     is            => 'rw',
-    traits        => ['MooseX::Getopt::Meta::Attribute::Trait'],
+    traits        => ['MouseX::Getopt::Meta::Attribute::Trait'],
     documentation => 'Only print the commands',
 );
 
@@ -266,7 +266,7 @@ sub _move_aside_conflicting_files {
     if ( @awaiting_remote_files and not $self->{'dry-run'} ) {
         foreach my $file (@awaiting_remote_files) {
             if ( -f $file || -d $file ) {
-                # TODO Try MooseX::Types::DateTime
+                # TODO Try MouseX::Types::DateTime
                 my $dt   = DateTime->today->set_time_zone('local');
                 my $date = $dt->strftime('%Y%m%d');
 

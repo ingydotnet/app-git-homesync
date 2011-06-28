@@ -1,5 +1,5 @@
 package App::Git::HomeSync::Command::config;
-use Moose;
+use Mouse;
 use namespace::autoclean;
 
 extends qw(App::Git::HomeSync::Command);

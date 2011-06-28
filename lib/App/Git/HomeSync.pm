@@ -1,10 +1,10 @@
 package App::Git::HomeSync;
-use Moose;
+use Mouse;
 use namespace::autoclean;
 
 # ABSTRACT: Sync your home directories via Git
 
-extends qw(MooseX::App::Cmd);
+extends qw(MouseX::App::Cmd);
 
 __PACKAGE__->meta->make_immutable;
 

@@ -1,5 +1,5 @@
 package App::Git::HomeSync::Command::init;
-use Moose;
+use Mouse;
 use namespace::autoclean;
 
 extends qw(App::Git::HomeSync::Command);
@@ -20,11 +20,11 @@ has 'central-repo' => (
     isa           => 'Str',
     is            => 'rw',
     required      => 0,
-    traits        => ['MooseX::Getopt::Meta::Attribute::Trait'],
+    traits        => ['MouseX::Getopt::Meta::Attribute::Trait'],
     documentation => 'The full path to the central repository to sync to',
 );
 
-# TODO Convert to MooseX::Types::Path::Class
+# TODO Convert to MouseX::Types::Path::Class
 has '_central_repo' => (
     isa        => 'Str',
     is         => 'rw',
@@ -50,7 +50,7 @@ around '_central_repo' => sub {
     return $self->$orig(@_);
 };
 
-# TODO Convert to MooseX::Types::Path::Class
+# TODO Convert to MouseX::Types::Path::Class
 has '_repo_dir' => (
     isa        => 'Str',
     is         => 'rw',
