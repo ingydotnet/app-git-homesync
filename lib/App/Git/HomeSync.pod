@@ -1,0 +1,30 @@
+=encoding utf8
+
+=head1 NAME
+
+App::Git::HomeSync - Sync your home directories via Git
+
+=head1 SEE ALSO
+
+=over
+
+=item *
+
+L<App::AYCABTU>
+
+=back
+
+=head1 AUTHOR
+
+Tommy Stanton <tommystanton@gmail.com>
+
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (c) 2011. Tommy Stanton.
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+See http://www.perl.com/perl/misc/Artistic.html
+
+=cut
